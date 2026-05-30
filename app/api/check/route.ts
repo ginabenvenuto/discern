@@ -74,8 +74,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(result);
   } catch (err) {
     console.error("Analysis error:", err);
+    const message = err instanceof Error ? err.message : "Unknown error";
+    const hasKey = !!process.env.ANTHROPIC_API_KEY;
     return NextResponse.json(
-      { error: "Something went wrong. Please try again." },
+      {
+        error: !hasKey
+          ? "Server is missing ANTHROPIC_API_KEY env var."
+          : `Analysis failed: ${message}`,
+      },
       { status: 500 }
     );
   }
