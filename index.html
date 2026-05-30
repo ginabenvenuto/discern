@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discern — Think clearly about any job opportunity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800&family=Cormorant+Garamond:ital,wght@1,600;1,700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:       #2C4A38;
+      --green-light: #3A5E48;
+      --green-dark:  #1E3328;
+      --cream:       #EDE8DF;
+      --cream-light: #F4F1EB;
+      --ink:         #1A2E22;
+      --ink-mid:     #3D5446;
+      --ink-light:   #7A9486;
+      --border:      rgba(255,255,255,0.15);
+      --border-light:#D4CFC9;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--green);
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ══ NAV ══════════════════════════════════════ */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      position: relative;
+      z-index: 10;
+    }
+    .nav-logo {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .nav-logo svg { flex-shrink: 0; }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-cta {
+      border: 1px solid rgba(255,255,255,0.5);
+      background: transparent;
+      color: #fff;
+      padding: 9px 22px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      text-decoration: none;
+    }
+    .nav-cta:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.8); }
+
+    /* ══ HERO ══════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--green);
+    }
+
+    .hero-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px 24px 48px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 24px;
+    }
+
+    .hero-h1 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(34px, 4.8vw, 58px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      color: #fff;
+      margin-bottom: 18px;
+    }
+    .hero-h1 .script {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: 1.15em;
+      letter-spacing: -0.01em;
+      line-height: 0.95;
+      display: inline-block;
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.6);
+      max-width: 460px;
+      margin-bottom: 48px;
+      font-weight: 400;
+    }
+
+    /* ══ INPUT CARD ═══════════════════════════════ */
+    .input-card {
+      width: 100%;
+      max-width: 680px;
+      background: var(--cream);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.25), 0 4px 16px rgba(0,0,0,0.15);
+      transition: box-shadow 0.35s ease, transform 0.35s ease;
+      animation: card-breathe 5s ease-in-out infinite;
+    }
+    @keyframes card-breathe {
+      0%, 100% {
+        box-shadow:
+          0 24px 60px rgba(0,0,0,0.25),
+          0 4px 16px rgba(0,0,0,0.15),
+          0 0 0 0 rgba(196,176,138,0);
+      }
+      50% {
+        box-shadow:
+          0 28px 70px rgba(0,0,0,0.28),
+          0 6px 20px rgba(0,0,0,0.16),
+          0 0 0 4px rgba(196,176,138,0.10);
+      }
+    }
+    .input-card:focus-within {
+      animation: none;
+      transform: translateY(-3px);
+      box-shadow:
+        0 32px 80px rgba(0,0,0,0.32),
+        0 10px 28px rgba(44,74,56,0.22),
+        0 0 0 1.5px rgba(44,74,56,0.35);
+    }
+    .input-card.drag-over {
+      animation: none;
+      box-shadow: 0 0 0 2px var(--green), 0 24px 60px rgba(0,0,0,0.25);
+    }
+    .input-card.drag-over textarea::placeholder {
+      color: var(--green);
+    }
+    .drag-hint {
+      display: none;
+      font-size: 12px;
+      color: var(--green);
+      text-align: center;
+      padding: 8px 0 4px;
+      font-weight: 500;
+    }
+    .input-card.drag-over .drag-hint { display: block; }
+
+    /* Mode tabs */
+    .mode-tabs {
+      display: flex;
+      gap: 4px;
+      padding: 14px 16px 0;
+    }
+    .mode-tab {
+      font-size: 13px;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      padding: 7px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+      color: var(--ink-mid);
+      background: transparent;
+    }
+    .mode-tab.active {
+      background: var(--green);
+      color: #fff;
+    }
+    .mode-tab:not(.active):hover {
+      background: rgba(44,74,56,0.08);
+      transform: translateY(-1px);
+    }
+    .mode-tab:active { transform: translateY(0); }
+
+    /* Quick check pane */
+    .pane { display: block; }
+    .pane.hidden { display: none; }
+
+    .pane textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 14px 20px 6px;
+      font-size: 15px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--ink);
+      line-height: 1.55;
+      resize: none;
+      outline: none;
+      display: block;
+      min-height: 64px;
+    }
+    .pane textarea::placeholder { color: #9BAAA3; }
+
+    .pane-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px 16px;
+      gap: 10px;
+    }
+
+    .attach-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 7px 13px;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--ink-mid);
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+    }
+    .attach-btn:hover {
+      border-color: var(--green);
+      color: var(--green);
+      transform: translateY(-1px);
+      background: rgba(44,74,56,0.04);
+    }
+    .attach-btn:active { transform: translateY(0); }
+
+    .img-chip {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--ink-mid);
+      background: rgba(44,74,56,0.1);
+      padding: 5px 10px;
+      border-radius: 8px;
+    }
+    .img-chip button { background: none; border: none; cursor: pointer; color: var(--ink-light); font-size: 15px; line-height: 1; padding: 0; }
+
+    .submit-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--green);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      animation: submit-pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes submit-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(44,74,56,0.5); }
+      50%      { box-shadow: 0 0 0 8px rgba(44,74,56,0); }
+    }
+    .submit-btn:hover:not(:disabled) {
+      background: var(--green-dark);
+      transform: scale(1.08);
+    }
+    .submit-btn:active:not(:disabled) { transform: scale(0.96); }
+    .submit-btn:disabled {
+      background: #C4BFB8;
+      cursor: not-allowed;
+      animation: none;
+      box-shadow: none;
+    }
+    .submit-btn svg { display: block; transition: transform 0.2s ease; }
+    .submit-btn:hover:not(:disabled) svg { transform: translateY(-1px); }
+
+    /* Project mode pane */
+    .project-pane-inner {
+      padding: 28px 24px 32px;
+      text-align: left;
+    }
+    .project-pane-inner h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .project-pane-inner p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--ink-mid);
+      margin-bottom: 20px;
+      max-width: 480px;
+    }
+    .project-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .project-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--ink-mid);
+    }
+    .project-step-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1.5px dashed var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-light);
+      flex-shrink: 0;
+    }
+    .coming-soon-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 6px;
+      background: rgba(44,74,56,0.1);
+      color: var(--ink-mid);
+    }
+
+    /* Project mode */
+    .proj-view { padding: 16px 18px 18px; }
+    .proj-view.hidden { display: none; }
+
+    .proj-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .proj-header-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #9BAAA3;
+    }
+    .proj-link {
+      background: none; border: none; font-size: 12px; font-family: 'DM Sans', sans-serif;
+      color: #9BAAA3; cursor: pointer; padding: 0; display: flex; align-items: center; gap: 4px;
+    }
+    .proj-link:hover { color: var(--ink-mid); }
+
+    .proj-empty {
+      text-align: center; padding: 20px 8px 8px;
+    }
+    .proj-empty p { font-size: 13px; color: #9BAAA3; line-height: 1.6; margin-bottom: 16px; }
+
+    .proj-name-input {
+      width: 100%; background: rgba(44,74,56,0.07); border: 1px solid var(--border-light);
+      border-radius: 10px; padding: 11px 14px; font-size: 14px;
+      font-family: 'DM Sans', sans-serif; color: var(--ink); outline: none;
+      margin-bottom: 8px;
+    }
+    .proj-name-input:focus { border-color: var(--green); }
+    .proj-name-input::placeholder { color: #B0BDB8; }
+
+    .proj-create-btn {
+      width: 100%; background: var(--green); color: #fff; border: none;
+      border-radius: 10px; padding: 11px; font-size: 13px; font-weight: 600;
+      font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background 0.15s;
+    }
+    .proj-create-btn:hover { background: var(--green-dark); }
+    .proj-create-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .proj-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+    .proj-list-item {
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(44,74,56,0.07); border-radius: 10px; padding: 11px 14px;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .proj-list-item:hover { background: rgba(44,74,56,0.13); }
+    .proj-list-item-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+    .proj-list-item-meta { font-size: 11px; color: #9BAAA3; }
+
+    .proj-back {
+      background: none; border: none; font-size: 12px; font-family: 'DM Sans', sans-serif;
+      color: #9BAAA3; cursor: pointer; padding: 0 0 12px 0; display: flex;
+      align-items: center; gap: 5px;
+    }
+    .proj-back:hover { color: var(--ink-mid); }
+
+    .proj-title { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 12px; font-family: 'DM Sans', sans-serif; }
+
+    .signal-list-proj { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; max-height: 160px; overflow-y: auto; }
+    .signal-list-item {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 10px; background: rgba(44,74,56,0.07); border-radius: 8px; padding: 9px 12px;
+    }
+    .signal-list-item-body { flex: 1; min-width: 0; }
+    .signal-list-item-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-bottom: 2px; }
+    .signal-list-item-preview { font-size: 12px; color: var(--ink-mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .signal-delete { background: none; border: none; cursor: pointer; color: #C4BFBA; font-size: 16px; padding: 0; flex-shrink: 0; line-height: 1; }
+    .signal-delete:hover { color: #7A1A1A; }
+
+    .proj-actions { display: flex; gap: 8px; }
+    .proj-add-btn {
+      flex: 1; background: rgba(44,74,56,0.1); border: none; border-radius: 10px;
+      padding: 10px; font-size: 12px; font-weight: 500; font-family: 'DM Sans', sans-serif;
+      color: var(--ink-mid); cursor: pointer; transition: background 0.15s;
+    }
+    .proj-add-btn:hover { background: rgba(44,74,56,0.18); }
+    .proj-analyze-btn {
+      flex: 1; background: var(--green); color: #fff; border: none; border-radius: 10px;
+      padding: 10px; font-size: 12px; font-weight: 600; font-family: 'DM Sans', sans-serif;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .proj-analyze-btn:hover { background: var(--green-dark); }
+    .proj-analyze-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .signal-type-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .signal-type-pill {
+      font-size: 12px; font-family: 'DM Sans', sans-serif; padding: 5px 12px;
+      border-radius: 999px; border: 1px solid var(--border-light); background: transparent;
+      color: var(--ink-mid); cursor: pointer; transition: all 0.12s;
+    }
+    .signal-type-pill.selected { background: var(--green); color: #fff; border-color: var(--green); }
+
+    .hero-footnote {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 20px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ══ BELOW FOLD ═══════════════════════════════ */
+    .below-fold {
+      background: var(--cream-light);
+      color: var(--ink);
+    }
+
+    .section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .section:last-child { border-bottom: none; }
+
+    .section-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 16px;
+    }
+
+    .section h2 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+    .section h2 em {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: 1.1em;
+      letter-spacing: -0.01em;
+    }
+
+    .section p {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--ink-mid);
+      max-width: 580px;
+      margin-bottom: 16px;
+    }
+    .section p:last-child { margin-bottom: 0; }
+
+    /* Two modes cards */
+    .modes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border-light);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 40px;
+    }
+    .mode-card {
+      background: var(--cream-light);
+      padding: 32px;
+    }
+    .mode-card-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 14px;
+      display: block;
+    }
+    .mode-card h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .mode-card p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--ink-mid);
+      margin-bottom: 20px;
+      max-width: none;
+    }
+    .mode-pill {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-light);
+      color: var(--ink-light);
+    }
+    .mode-pill.live {
+      background: var(--green);
+      color: #fff;
+      border-color: var(--green);
+    }
+
+    /* Output example */
+    .output-example {
+      margin-top: 28px;
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      padding: 24px 26px;
+      max-width: 600px;
+    }
+    .output-example-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 12px;
+    }
+    .output-example-text {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--ink-mid);
+      font-style: italic;
+      border-left: 2px solid var(--green);
+      padding-left: 16px;
+    }
+
+    /* Privacy items */
+    .privacy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+      margin-top: 40px;
+    }
+    .privacy-item-num {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .privacy-item-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .privacy-item-text {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--ink-mid);
+      margin-bottom: 0;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--green-dark);
+      color: rgba(255,255,255,0.5);
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+    }
+    .footer-note { font-size: 12px; }
+
+    /* ══ CONFIRM STEP ═════════════════════════════ */
+    .full-step {
+      min-height: 100vh;
+      background: var(--cream-light);
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+    }
+    .full-step-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border-light);
+      background: var(--cream-light);
+    }
+    .full-step-nav .nav-logo { color: var(--ink); }
+    .step-back {
+      background: none;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--ink-mid);
+      cursor: pointer;
+    }
+    .step-back:hover { border-color: var(--ink-mid); color: var(--ink); }
+
+    .step-body {
+      flex: 1;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+      width: 100%;
+    }
+
+    .step-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 8px;
+    }
+    .step-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .step-sub {
+      font-size: 15px;
+      color: var(--ink-mid);
+      margin-bottom: 40px;
+    }
+
+    .detail-block {
+      border-top: 1px solid var(--border-light);
+      padding: 18px 0;
+    }
+    .detail-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 10px;
+    }
+    .detail-text { font-size: 14px; color: var(--ink-mid); line-height: 1.65; }
+    .detail-pre {
+      font-size: 13px;
+      color: var(--ink);
+      line-height: 1.65;
+      white-space: pre-wrap;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .redaction-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--ink-mid);
+      background: rgba(44,74,56,0.08);
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin: 3px;
+    }
+    .redaction-pill span {
+      font-family: monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 0.05em;
+    }
+
+    .privacy-sm {
+      font-size: 12px;
+      color: var(--ink-light);
+      line-height: 1.6;
+      padding: 14px 0;
+    }
+
+    .btn-row { display: flex; gap: 10px; margin-top: 28px; }
+    .btn-primary {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      padding: 12px 26px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: var(--green-dark); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--ink-mid);
+      border: 1px solid var(--border-light);
+      padding: 12px 22px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .btn-secondary:hover { border-color: var(--ink-mid); color: var(--ink); }
+
+    .error-msg {
+      font-size: 13px;
+      color: #7A1A1A;
+      margin-top: 10px;
+    }
+
+    /* ══ LOADING ══════════════════════════════════ */
+    .loading-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 24px;
+      gap: 16px;
+    }
+    .spinner {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--border-light);
+      border-top-color: var(--green);
+      animation: spin 0.75s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-size: 15px; color: var(--ink-mid); }
+
+    /* ══ RESULT ═══════════════════════════════════ */
+    .result-section {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .result-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 0 32px;
+      border-top: 1px solid var(--border-light);
+      padding: 32px 0;
+    }
+
+    .result-row-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      padding-top: 3px;
+      line-height: 1.5;
+    }
+
+    .result-situation { font-size: 17px; line-height: 1.72; color: var(--ink); }
+
+    .signal-item {
+      display: flex; gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px; color: var(--ink-mid); line-height: 1.6;
+    }
+    .signal-item:last-child { border-bottom: none; }
+    .signal-dash { color: var(--border-light); flex-shrink: 0; }
+
+    .notable-item {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .notable-item:last-child { border-bottom: none; }
+    .notable-obs { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 5px; line-height: 1.45; }
+    .notable-ctx { font-size: 14px; color: var(--ink-mid); line-height: 1.65; }
+
+    .step-item {
+      display: flex; gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px; color: var(--ink-mid); line-height: 1.6;
+    }
+    .step-item:last-child { border-bottom: none; }
+    .step-n { font-size: 11px; font-weight: 600; color: var(--ink-light); flex-shrink: 0; padding-top: 2px; min-width: 20px; }
+
+    .bottom-line-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 600; font-style: italic;
+      line-height: 1.5; color: var(--ink);
+    }
+
+    /* Project prompt after result */
+    .project-prompt {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 32px;
+    }
+    .project-prompt-inner {
+      background: var(--green);
+      border-radius: 14px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .project-prompt-inner p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.6; margin: 0; max-width: none; }
+    .project-prompt-inner strong { color: #fff; font-weight: 500; }
+    .project-prompt-inner .btn-outline-white {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.4);
+      color: #fff;
+      padding: 9px 20px;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      opacity: 0.5;
+    }
+
+    .reset-link {
+      display: block;
+      text-align: center;
+      padding: 28px 24px 60px;
+      font-size: 13px;
+      color: var(--ink-light);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .reset-link:hover { color: var(--ink-mid); }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 700px) {
+      nav, .full-step-nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hero-center { padding: 32px 20px 60px; }
+      .modes-grid, .privacy-grid { grid-template-columns: 1fr; }
+      .section { padding: 56px 20px; }
+      footer { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
+      .result-row { grid-template-columns: 1fr; gap: 8px; }
+      .result-row-label { font-size: 9px; }
+      .project-prompt-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  LANDING PAGE                                      -->
+<!-- ══════════════════════════════════════════════════ -->
+<div id="page-landing">
+
+  <!-- HERO -->
+  <div class="hero">
+    <nav>
+      <a class="nav-logo" href="#">
+        <svg width="22" height="12" viewBox="0 0 22 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 3 C3.5 0.5 5.5 0.5 8 3 C10.5 5.5 12.5 5.5 15 3 C17.5 0.5 19.5 0.5 21 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <path d="M1 9 C3.5 6.5 5.5 6.5 8 9 C10.5 11.5 12.5 11.5 15 9 C17.5 6.5 19.5 6.5 21 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        </svg>
+        Discern
+      </a>
+      <ul class="nav-links">
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#modes">Quick Check vs Project Mode</a></li>
+        <li><a href="#privacy">Privacy</a></li>
+      </ul>
+      <a class="nav-cta" href="#input-card">Try it free</a>
+    </nav>
+
+    <div class="hero-center">
+      <h1 class="hero-h1"><span class="script">Think clearly</span><br>about any job opportunity.</h1>
+      <p class="hero-sub">A private, judgment-free second opinion during your job search — for when something feels off and you just need someone to think it through with.</p>
+
+      <!-- INPUT CARD -->
+      <div class="input-card" id="input-card">
+        <!-- Tabs -->
+        <div class="mode-tabs">
+          <button class="mode-tab active" id="tab-quick" onclick="switchTab('quick')">Quick Check</button>
+          <button class="mode-tab" id="tab-project" onclick="switchTab('project')">Project Mode</button>
+        </div>
+
+        <!-- Quick Check pane -->
+        <div class="pane" id="pane-quick">
+          <p class="drag-hint">Drop to add your screenshot</p>
+          <textarea id="main-input" rows="3"
+            placeholder="Tell me what's going on. Paste a message, job posting, recruiter email, LinkedIn DM, or offer letter — something you want a second pair of eyes on."
+            oninput="updateBtn()"></textarea>
+          <div class="pane-toolbar">
+            <div style="display:flex;align-items:center;gap:8px">
+              <button class="attach-btn" onclick="document.getElementById('file-input').click()">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                Attach screenshot
+              </button>
+              <div id="img-chip" class="img-chip hidden">
+                <span id="img-chip-name"></span>
+                <button onclick="removeImage()">×</button>
+              </div>
+            </div>
+            <button class="submit-btn" id="submit-btn" onclick="handleReview()" disabled>
+              <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Project Mode pane -->
+        <div class="pane hidden" id="pane-project">
+          <div id="proj-view-list" class="proj-view"></div>
+          <div id="proj-view-detail" class="proj-view hidden"></div>
+          <div id="proj-view-add-signal" class="proj-view hidden"></div>
+          <div id="proj-view-new" class="proj-view hidden"></div>
+        </div>
+      </div>
+      <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/gif" style="display:none" onchange="handleImageUpload(event)" />
+
+      <p class="hero-footnote">No account needed &nbsp;·&nbsp; Nothing stored &nbsp;·&nbsp; Free to use</p>
+    </div>
+  </div>
+
+  <!-- BELOW FOLD -->
+  <div class="below-fold">
+
+    <!-- THE PROBLEM -->
+    <div class="section" id="how-it-works">
+      <p class="section-eyebrow">The problem</p>
+      <h2>You notice things.<br>You just don't say them <em>out loud.</em></h2>
+      <p>The message that feels a little too eager. The job posting that's vague in ways that don't quite add up. The recruiter whose company you can't find on LinkedIn. You notice all of it — and then you talk yourself out of trusting what you noticed.</p>
+      <p>Because the market is hard right now. Because it might be nothing. Because there's no one to ask who won't make it weird, or make you feel like you're being paranoid.</p>
+      <p>Discern gives you a place to say it out loud — and a grounded, honest read back. Not an alarm. Not a verdict. Just the kind of practical, matter-of-fact take you'd get from a sharp friend who's seen a lot of job searches.</p>
+    </div>
+
+    <!-- TWO MODES -->
+    <div class="section" id="modes">
+      <p class="section-eyebrow">Two modes</p>
+      <h2>One check or a full picture.<br><em>Your call.</em></h2>
+      <p>Start with one thing. Come back as you learn more. Discern meets you wherever you are in the process.</p>
+
+      <div class="modes-grid">
+        <div class="mode-card">
+          <span class="mode-card-tag">Available now</span>
+          <h3>Quick Check</h3>
+          <p>Paste one thing — a message, a job post, a recruiter email, a screenshot. Get a signal read back in seconds. Fast, low friction, no setup required.</p>
+          <span class="mode-pill live">Live now</span>
+        </div>
+        <div class="mode-card">
+          <span class="mode-card-tag">Coming soon</span>
+          <h3>Project Mode</h3>
+          <p>Tracking a specific opportunity? Add signals over time — the job post, the recruiter's profile, their first email, the offer letter. Discern triangulates across everything and builds a richer picture as you go.</p>
+          <span class="mode-pill">In development</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHAT YOU GET BACK -->
+    <div class="section">
+      <p class="section-eyebrow">What you get back</p>
+      <h2>A read, not a verdict.</h2>
+      <p>Discern doesn't tell you what to do. It acknowledges what looks normal, names what's worth a closer look, and gives you specific steps to verify the parts that feel uncertain. Then it gets out of your way.</p>
+
+      <div class="output-example">
+        <p class="output-example-label">Example output — tone</p>
+        <p class="output-example-text">"It's common for recruiters to reach out on LinkedIn without sending the full job description up front — that part isn't unusual. What's worth a closer look is the request to move to WhatsApp before any interview has happened. Legitimate recruiters at established companies generally don't need to leave the platform this early. One easy check: ask if they're open to a quick video call on LinkedIn instead. How they respond will tell you something."</p>
+      </div>
+    </div>
+
+    <!-- PRIVACY -->
+    <div class="section" id="privacy">
+      <p class="section-eyebrow">Privacy</p>
+      <h2>Your data is<br><em>never</em> ours to keep.</h2>
+      <div class="privacy-grid">
+        <div>
+          <span class="privacy-item-num">01</span>
+          <p class="privacy-item-title">Nothing is stored</p>
+          <p class="privacy-item-text">Your submission is sent to Claude for analysis, a response comes back, and nothing is written to any database — ours or anyone else's.</p>
+        </div>
+        <div>
+          <span class="privacy-item-num">02</span>
+          <p class="privacy-item-title">PII removed before sending</p>
+          <p class="privacy-item-text">Emails, phone numbers, and ID numbers are automatically redacted in your browser before anything leaves your device. You'll see what gets sent before you confirm.</p>
+        </div>
+        <div>
+          <span class="privacy-item-num">03</span>
+          <p class="privacy-item-title">Anthropic doesn't train on API data</p>
+          <p class="privacy-item-text">The Claude API is explicitly excluded from Anthropic's training pipeline. We say this plainly rather than hiding it in fine print.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <span class="footer-logo" style="display:flex;align-items:center;gap:8px">
+        <svg width="16" height="13" viewBox="0 0 18 15" fill="none"><rect x="0" y="9" width="4" height="6" rx="1.2" fill="currentColor"/><rect x="7" y="5" width="4" height="10" rx="1.2" fill="currentColor"/><rect x="14" y="0" width="4" height="15" rx="1.2" fill="currentColor"/></svg>
+        Discern
+      </span>
+      <span class="footer-note">Built by Gina Benvenuto · Part of gina-portfolio.vercel.app</span>
+    </footer>
+
+  </div>
+</div><!-- end landing -->
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  CONFIRM                                           -->
+<!-- ══════════════════════════════════════════════════ -->
+<div id="step-confirm" class="hidden full-step">
+  <div class="full-step-nav">
+    <span class="nav-logo" style="color:var(--ink)">
+      <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="9" width="4" height="6" rx="1.2" fill="currentColor"/>
+        <rect x="7" y="5" width="4" height="10" rx="1.2" fill="currentColor"/>
+        <rect x="14" y="0" width="4" height="15" rx="1.2" fill="currentColor"/>
+      </svg>
+      Discern
+    </span>
+    <button class="step-back" onclick="showLanding()">← Back</button>
+  </div>
+  <div class="step-body">
+    <p class="step-eyebrow">Before we send anything</p>
+    <h2 class="step-title">Here's what Claude will see.</h2>
+    <p class="step-sub">Review before your content leaves your browser. Nothing is stored.</p>
+
+    <div id="conf-redaction" class="detail-block hidden">
+      <p class="detail-label" id="conf-redaction-title"></p>
+      <div id="conf-redaction-list"></div>
+    </div>
+    <div id="conf-no-redaction" class="detail-block hidden">
+      <p class="detail-label">Personal info</p>
+      <p class="detail-text">No personal information detected in your text.</p>
+    </div>
+    <div id="conf-image" class="detail-block hidden">
+      <p class="detail-label">Screenshot</p>
+      <p class="detail-text" id="conf-image-name"></p>
+      <p class="detail-text" style="margin-top:4px;font-size:12px;color:var(--ink-light)">Images can't be auto-redacted — confirm you're comfortable with what's visible.</p>
+    </div>
+    <div id="conf-text" class="detail-block hidden">
+      <p class="detail-label">Text being sent</p>
+      <div class="detail-pre" id="conf-text-preview"></div>
+    </div>
+    <p class="privacy-sm">Sent to Anthropic's Claude API. Anthropic does not train on API data.</p>
+
+    <p id="confirm-error" class="error-msg hidden"></p>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="showLanding()">← Back</button>
+      <button class="btn-primary" onclick="handleConfirm()">Looks good — analyze it</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  LOADING                                           -->
+<!-- ══════════════════════════════════════════════════ -->
+<div id="step-loading" class="hidden full-step">
+  <div class="full-step-nav">
+    <span class="nav-logo" style="color:var(--ink)">
+      <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="9" width="4" height="6" rx="1.2" fill="currentColor"/>
+        <rect x="7" y="5" width="4" height="10" rx="1.2" fill="currentColor"/>
+        <rect x="14" y="0" width="4" height="15" rx="1.2" fill="currentColor"/>
+      </svg>
+      Discern
+    </span>
+  </div>
+  <div class="loading-center">
+    <div class="spinner"></div>
+    <p class="loading-text">Taking a look...</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  RESULT                                            -->
+<!-- ══════════════════════════════════════════════════ -->
+<div id="step-result" class="hidden full-step">
+  <div class="full-step-nav">
+    <span class="nav-logo" style="color:var(--ink)">
+      <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="9" width="4" height="6" rx="1.2" fill="currentColor"/>
+        <rect x="7" y="5" width="4" height="10" rx="1.2" fill="currentColor"/>
+        <rect x="14" y="0" width="4" height="15" rx="1.2" fill="currentColor"/>
+      </svg>
+      Discern
+    </span>
+    <button class="step-back" onclick="handleReset()">← New check</button>
+  </div>
+
+  <div style="background:var(--cream-light);flex:1">
+    <div style="max-width:720px;margin:0 auto;padding:40px 24px 0">
+      <p style="font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-light);margin-bottom:6px">Your read</p>
+      <p style="font-size:13px;color:var(--ink-light)">Based on what you shared — no account needed, nothing stored.</p>
+    </div>
+
+    <div class="result-section">
+      <div class="result-row">
+        <p class="result-row-label">What's going on</p>
+        <p class="result-situation" id="result-situation"></p>
+      </div>
+      <div class="result-row" id="result-normal-row">
+        <p class="result-row-label">What looks normal</p>
+        <div id="result-normal-list"></div>
+      </div>
+      <div class="result-row" id="result-notable-row">
+        <p class="result-row-label">Worth noting</p>
+        <div id="result-notable-list"></div>
+      </div>
+      <div class="result-row" id="result-steps-row">
+        <p class="result-row-label">What to do now</p>
+        <div id="result-steps-list"></div>
+      </div>
+      <div class="result-row">
+        <p class="result-row-label">Bottom line</p>
+        <p class="bottom-line-text" id="result-bottom-line"></p>
+      </div>
+    </div>
+
+    <div class="project-prompt">
+      <div class="project-prompt-inner">
+        <p><strong>Want to track this opportunity over time?</strong> Project mode lets you add signals as you go — job post, recruiter profile, emails, offer letter — and builds a richer picture as your research grows.</p>
+        <button class="btn-outline-white" disabled>Start a project (coming soon)</button>
+      </div>
+    </div>
+
+    <p class="reset-link" onclick="handleReset()">← Check something else</p>
+  </div>
+</div>
+
+<script>
+  let imageData = null, scrubbedText = '', redactions = [];
+  let activeProjectId = null;
+  let selectedSignalType = 'Job posting';
+  let isProjectAnalysis = false;
+
+  // ── Animated placeholder ─────────────────────────
+  (function() {
+    const ta = document.getElementById('main-input');
+    if (!ta) return;
+    const prompts = [
+      "Tell me what's going on. Paste a message, job posting, recruiter email, LinkedIn DM, or offer letter — something you want a second pair of eyes on.",
+      "Paste a recruiter's first DM. I'll help you read between the lines.",
+      "Drop in a job posting you're not sure about. I'll walk through it with you.",
+      "Share an email from a hiring manager — let's see what's actually being said.",
+      "Got an offer letter that feels off? Paste it here and we'll look together."
+    ];
+    let promptIdx = 0, charIdx = 0, deleting = false, paused = false;
+    const TYPE_MS = 28, DELETE_MS = 14, HOLD_MS = 2200, START_DELAY = 600;
+
+    function tick() {
+      if (paused) return;
+      const full = prompts[promptIdx];
+      if (!deleting) {
+        charIdx++;
+        ta.placeholder = full.slice(0, charIdx);
+        if (charIdx >= full.length) {
+          deleting = true;
+          setTimeout(tick, HOLD_MS);
+          return;
+        }
+        setTimeout(tick, TYPE_MS + Math.random() * 30);
+      } else {
+        charIdx--;
+        ta.placeholder = full.slice(0, charIdx);
+        if (charIdx <= 0) {
+          deleting = false;
+          promptIdx = (promptIdx + 1) % prompts.length;
+          setTimeout(tick, 280);
+          return;
+        }
+        setTimeout(tick, DELETE_MS);
+      }
+    }
+
+    function stop() {
+      paused = true;
+      ta.placeholder = prompts[0];
+    }
+    ta.addEventListener('focus', stop, { once: true });
+    ta.addEventListener('input', stop, { once: true });
+
+    ta.placeholder = '';
+    setTimeout(tick, START_DELAY);
+  })();
+
+  // ── Project storage ──────────────────────────────
+  function getProjects() { return JSON.parse(localStorage.getItem('discern_projects') || '[]'); }
+  function saveProjects(p) { localStorage.setItem('discern_projects', JSON.stringify(p)); }
+  function uid() { return Math.random().toString(36).slice(2,10); }
+
+  function createProject(name) {
+    const projects = getProjects();
+    const p = { id: uid(), name, created: Date.now(), submissions: [] };
+    projects.push(p);
+    saveProjects(projects);
+    return p;
+  }
+
+  function getProject(id) { return getProjects().find(p => p.id === id); }
+
+  function addSignal(projectId, label, content) {
+    const projects = getProjects();
+    const p = projects.find(p => p.id === projectId);
+    if (!p) return;
+    p.submissions.push({ id: uid(), label, content, added: Date.now() });
+    saveProjects(projects);
+  }
+
+  function deleteSignal(projectId, signalId) {
+    const projects = getProjects();
+    const p = projects.find(p => p.id === projectId);
+    if (!p) return;
+    p.submissions = p.submissions.filter(s => s.id !== signalId);
+    saveProjects(projects);
+  }
+
+  // ── Project UI ───────────────────────────────────
+  const SIGNAL_TYPES = ['Job posting','Recruiter message','Email thread','LinkedIn profile','Offer letter','Other'];
+
+  function showProjView(id) {
+    ['proj-view-list','proj-view-detail','proj-view-add-signal','proj-view-new'].forEach(v =>
+      document.getElementById(v).classList.toggle('hidden', v !== id)
+    );
+  }
+
+  function renderProjectList() {
+    const projects = getProjects();
+    const el = document.getElementById('proj-view-list');
+    if (projects.length === 0) {
+      el.innerHTML = `
+        <div class="proj-header"><span class="proj-header-label">Project Mode</span></div>
+        <div class="proj-empty">
+          <p>Track a specific opportunity over time — add signals as you learn more and Discern builds a fuller picture.</p>
+        </div>
+        <input class="proj-name-input" id="proj-name-input" placeholder="Name this opportunity (e.g. Head of Product at Acme)" oninput="document.getElementById('proj-create-btn').disabled=!this.value.trim()" />
+        <button class="proj-create-btn" id="proj-create-btn" disabled onclick="handleCreateProject()">Create project →</button>`;
+    } else {
+      el.innerHTML = `
+        <div class="proj-header">
+          <span class="proj-header-label">Your projects</span>
+          <button class="proj-link" onclick="showNewProjectForm()">+ New</button>
+        </div>
+        <div class="proj-list">${projects.map(p => `
+          <div class="proj-list-item" onclick="openProject('${p.id}')">
+            <span class="proj-list-item-name">${p.name}</span>
+            <span class="proj-list-item-meta">${p.submissions.length} signal${p.submissions.length !== 1 ? 's' : ''}</span>
+          </div>`).join('')}
+        </div>`;
+    }
+    showProjView('proj-view-list');
+  }
+
+  function showNewProjectForm() {
+    document.getElementById('proj-view-new').innerHTML = `
+      <button class="proj-back" onclick="renderProjectList()">← Back</button>
+      <input class="proj-name-input" id="proj-name-input" placeholder="Name this opportunity (e.g. Head of Product at Acme)" oninput="document.getElementById('proj-create-btn').disabled=!this.value.trim()" />
+      <button class="proj-create-btn" id="proj-create-btn" disabled onclick="handleCreateProject()">Create project →</button>`;
+    showProjView('proj-view-new');
+  }
+
+  function handleCreateProject() {
+    const name = document.getElementById('proj-name-input').value.trim();
+    if (!name) return;
+    const p = createProject(name);
+    openProject(p.id);
+  }
+
+  function openProject(id) {
+    activeProjectId = id;
+    renderProjectDetail();
+  }
+
+  function renderProjectDetail() {
+    const p = getProject(activeProjectId);
+    if (!p) return renderProjectList();
+    const el = document.getElementById('proj-view-detail');
+    const signalsHtml = p.submissions.length
+      ? p.submissions.map(s => `
+          <div class="signal-list-item">
+            <div class="signal-list-item-body">
+              <p class="signal-list-item-label">${s.label}</p>
+              <p class="signal-list-item-preview">${s.content.slice(0,80)}${s.content.length > 80 ? '…' : ''}</p>
+            </div>
+            <button class="signal-delete" onclick="handleDeleteSignal('${s.id}')">×</button>
+          </div>`).join('')
+      : `<p style="font-size:12px;color:#9BAAA3;text-align:center;padding:12px 0">No signals yet — add the first one below.</p>`;
+
+    el.innerHTML = `
+      <button class="proj-back" onclick="renderProjectList()">← All projects</button>
+      <p class="proj-title">${p.name}</p>
+      <div class="signal-list-proj">${signalsHtml}</div>
+      <div class="proj-actions">
+        <button class="proj-add-btn" onclick="showAddSignal()">+ Add signal</button>
+        <button class="proj-analyze-btn" ${p.submissions.length === 0 ? 'disabled' : ''} onclick="handleAnalyzeProject()">Analyze all →</button>
+      </div>`;
+    showProjView('proj-view-detail');
+  }
+
+  function handleDeleteSignal(signalId) {
+    deleteSignal(activeProjectId, signalId);
+    renderProjectDetail();
+  }
+
+  function showAddSignal() {
+    selectedSignalType = SIGNAL_TYPES[0];
+    const el = document.getElementById('proj-view-add-signal');
+    el.innerHTML = `
+      <button class="proj-back" onclick="renderProjectDetail()">← Back</button>
+      <div class="signal-type-pills">${SIGNAL_TYPES.map(t =>
+        `<button class="signal-type-pill${t === selectedSignalType ? ' selected' : ''}" onclick="selectSignalType('${t}',this)">${t}</button>`
+      ).join('')}</div>
+      <textarea id="signal-input" class="proj-name-input" rows="4" placeholder="Paste the content here..." style="resize:none;height:90px"></textarea>
+      <button class="proj-create-btn" onclick="handleAddSignal()">Add to project →</button>`;
+    showProjView('proj-view-add-signal');
+  }
+
+  function selectSignalType(type, btn) {
+    selectedSignalType = type;
+    document.querySelectorAll('.signal-type-pill').forEach(p => p.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  function handleAddSignal() {
+    const content = document.getElementById('signal-input').value.trim();
+    if (!content) return;
+    const scrubbed = scrubPII(content).cleaned;
+    addSignal(activeProjectId, selectedSignalType, scrubbed);
+    renderProjectDetail();
+  }
+
+  function handleAnalyzeProject() {
+    const p = getProject(activeProjectId);
+    if (!p || p.submissions.length === 0) return;
+    isProjectAnalysis = true;
+    const allSignals = p.submissions.map((s, i) =>
+      `SIGNAL ${i + 1} — ${s.label}:\n${s.content}`
+    ).join('\n\n---\n\n');
+    scrubbedText = `Project: "${p.name}"\n\n${allSignals}`;
+    redactions = [];
+    imageData = null;
+
+    // Populate confirm screen
+    document.getElementById('conf-redaction').classList.add('hidden');
+    document.getElementById('conf-no-redaction').classList.add('hidden');
+    document.getElementById('conf-image').classList.add('hidden');
+    document.getElementById('conf-text-preview').textContent = scrubbedText;
+    document.getElementById('conf-text').classList.remove('hidden');
+    document.getElementById('confirm-error').classList.add('hidden');
+    showStep('confirm');
+  }
+
+  function switchTab(t) {
+    document.getElementById('tab-quick').classList.toggle('active', t === 'quick');
+    document.getElementById('tab-project').classList.toggle('active', t === 'project');
+    document.getElementById('pane-quick').classList.toggle('hidden', t !== 'quick');
+    document.getElementById('pane-project').classList.toggle('hidden', t !== 'project');
+    if (t === 'project') renderProjectList();
+  }
+
+  // ── Drag and drop ────────────────────────────────
+  const inputCard = document.querySelector('.input-card');
+  let dragCounter = 0;
+
+  inputCard.addEventListener('dragenter', e => {
+    e.preventDefault();
+    dragCounter++;
+    inputCard.classList.add('drag-over');
+  });
+  inputCard.addEventListener('dragleave', e => {
+    dragCounter--;
+    if (dragCounter === 0) inputCard.classList.remove('drag-over');
+  });
+  inputCard.addEventListener('dragover', e => e.preventDefault());
+  inputCard.addEventListener('drop', e => {
+    e.preventDefault();
+    dragCounter = 0;
+    inputCard.classList.remove('drag-over');
+
+    const files = Array.from(e.dataTransfer.files);
+    const imageFile = files.find(f => f.type.startsWith('image/'));
+    const textFile = files.find(f => f.type === 'text/plain');
+
+    if (imageFile) {
+      handleImageFile(imageFile);
+    } else if (textFile) {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        document.getElementById('main-input').value += (document.getElementById('main-input').value ? '\n\n' : '') + ev.target.result;
+        updateBtn();
+      };
+      reader.readAsText(textFile);
+    }
+
+    // Also handle dragged text (e.g. from another window)
+    const dragText = e.dataTransfer.getData('text/plain');
+    if (!imageFile && !textFile && dragText) {
+      const ta = document.getElementById('main-input');
+      ta.value += (ta.value ? '\n\n' : '') + dragText;
+      updateBtn();
+    }
+  });
+
+  function handleImageFile(file) {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const url = ev.target.result;
+      imageData = { base64: url.split(',')[1], mediaType: file.type, fileName: file.name };
+      document.getElementById('img-chip-name').textContent = file.name;
+      document.getElementById('img-chip').classList.remove('hidden');
+      updateBtn();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function updateBtn() {
+    const has = document.getElementById('main-input').value.trim().length > 0 || imageData;
+    document.getElementById('submit-btn').disabled = !has;
+  }
+
+  function handleImageUpload(e) {
+    const file = e.target.files[0];
+    if (file) handleImageFile(file);
+  }
+
+  function removeImage() {
+    imageData = null;
+    document.getElementById('file-input').value = '';
+    document.getElementById('img-chip').classList.add('hidden');
+    updateBtn();
+  }
+
+  function scrubPII(text) {
+    let cleaned = text, found = [];
+    cleaned = cleaned.replace(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g, m => { found.push({type:'EMAIL',value:m}); return '[EMAIL REDACTED]'; });
+    cleaned = cleaned.replace(/(\+?1[\s.\-]?)?(\(?\d{3}\)?[\s.\-]?\d{3}[\s.\-]?\d{4})/g, m => { found.push({type:'PHONE',value:m.trim()}); return '[PHONE REDACTED]'; });
+    cleaned = cleaned.replace(/\b\d{3}[-\s]?\d{2}[-\s]?\d{4}\b/g, m => { found.push({type:'ID',value:m}); return '[ID REDACTED]'; });
+    return { cleaned, found };
+  }
+
+  function handleReview() {
+    const raw = document.getElementById('main-input').value.trim();
+    const r = raw ? scrubPII(raw) : { cleaned: '', found: [] };
+    scrubbedText = r.cleaned; redactions = r.found;
+
+    if (redactions.length > 0) {
+      document.getElementById('conf-redaction-title').textContent = `Removed ${redactions.length} piece${redactions.length !== 1 ? 's' : ''} of personal info`;
+      document.getElementById('conf-redaction-list').innerHTML = redactions.map(rd => `<div class="redaction-pill"><span>${rd.type}</span>${rd.value}</div>`).join('');
+      document.getElementById('conf-redaction').classList.remove('hidden');
+      document.getElementById('conf-no-redaction').classList.add('hidden');
+    } else if (scrubbedText) {
+      document.getElementById('conf-no-redaction').classList.remove('hidden');
+      document.getElementById('conf-redaction').classList.add('hidden');
+    }
+    if (imageData) { document.getElementById('conf-image-name').textContent = imageData.fileName; document.getElementById('conf-image').classList.remove('hidden'); }
+    else document.getElementById('conf-image').classList.add('hidden');
+    if (scrubbedText) { document.getElementById('conf-text-preview').textContent = scrubbedText; document.getElementById('conf-text').classList.remove('hidden'); }
+    else document.getElementById('conf-text').classList.add('hidden');
+
+    showStep('confirm');
+  }
+
+  async function handleConfirm() {
+    const key = localStorage.getItem('discern_key') || '';
+    if (!key) {
+      const el = document.getElementById('confirm-error');
+      el.textContent = 'No API key found. Open the browser console and run: localStorage.setItem("discern_key", "your-key-here")';
+      el.classList.remove('hidden'); return;
+    }
+    document.getElementById('confirm-error').classList.add('hidden');
+    showStep('loading');
+
+    const msgs = [];
+    if (imageData) msgs.push({ type: 'image', source: { type: 'base64', media_type: imageData.mediaType, data: imageData.base64 } });
+    msgs.push({ type: 'text', text: (scrubbedText ? `Here is the content to analyze:\n\n${scrubbedText}` : 'Please analyze the image above.') + '\n\nRespond with raw JSON only (no markdown):\n{"situation":"...","normalSignals":["..."],"notableSignals":[{"observation":"...","context":"...","weight":"low|medium|high"}],"nextSteps":["...","...","..."],"bottomLine":"..."}' });
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'x-api-key': key, 'anthropic-version': '2023-06-01', 'content-type': 'application/json', 'anthropic-dangerous-direct-browser-access': 'true' },
+        body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 2048,
+          system: isProjectAnalysis
+            ? `You are analyzing multiple signals about a single job opportunity collected over time. Triangulate across ALL of them — note patterns, consistencies, and inconsistencies. Your analysis should be richer and more specific than a single-signal check because you have the fuller picture. Same tone: grounded, practical, like a trusted friend. No verdicts. Always acknowledge what looks normal. Give specific next steps. Respond in the same JSON format.`
+            : `You are a knowledgeable, experienced advisor helping a job seeker understand a job opportunity. You are not a scam detector — you do not issue verdicts. Your tone is like a sharp, trusted friend who has seen a lot of job searches: grounded, objective, practical. Never alarming, never dismissive, never condescending. Structure: situation, normalSignals (explicitly name what's unremarkable), notableSignals (tied to specific content, with innocent explanations alongside concerning ones), nextSteps (specific enough to actually do), bottomLine (warm, direct, never a verdict). Rules: Never say "this is a scam" or "this is safe". Always acknowledge what's normal before what's concerning. Give agency — frame steps as things they CAN do.`,
+          messages: [{ role: 'user', content: msgs }] })
+      });
+      if (!res.ok) { const e = await res.json(); throw new Error(e.error?.message || 'API error'); }
+      const data = await res.json();
+      const raw = data.content[0].text.replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'').trim();
+      renderResult(JSON.parse(raw));
+      showStep('result');
+    } catch(err) {
+      showStep('confirm');
+      const el = document.getElementById('confirm-error');
+      el.textContent = err.message || 'Something went wrong. Please try again.';
+      el.classList.remove('hidden');
+    }
+  }
+
+  function renderResult(r) {
+    document.getElementById('result-situation').textContent = r.situation;
+    const nl = document.getElementById('result-normal-list');
+    if (r.normalSignals?.length) { nl.innerHTML = r.normalSignals.map(s => `<div class="signal-item"><span class="signal-dash">—</span><span>${s}</span></div>`).join(''); document.getElementById('result-normal-row').classList.remove('hidden'); }
+    else document.getElementById('result-normal-row').classList.add('hidden');
+    const ntl = document.getElementById('result-notable-list');
+    if (r.notableSignals?.length) { ntl.innerHTML = r.notableSignals.map(s => `<div class="notable-item"><p class="notable-obs">${s.observation}</p><p class="notable-ctx">${s.context}</p></div>`).join(''); document.getElementById('result-notable-row').classList.remove('hidden'); }
+    else document.getElementById('result-notable-row').classList.add('hidden');
+    const sl = document.getElementById('result-steps-list');
+    if (r.nextSteps?.length) { sl.innerHTML = r.nextSteps.map((s,i) => `<div class="step-item"><span class="step-n">0${i+1}</span><span>${s}</span></div>`).join(''); document.getElementById('result-steps-row').classList.remove('hidden'); }
+    else document.getElementById('result-steps-row').classList.add('hidden');
+    document.getElementById('result-bottom-line').textContent = r.bottomLine;
+  }
+
+  function handleReset() {
+    document.getElementById('main-input').value = '';
+    removeImage(); scrubbedText = ''; redactions = []; isProjectAnalysis = false;
+    ['conf-redaction','conf-no-redaction','conf-image','conf-text','confirm-error'].forEach(id => document.getElementById(id).classList.add('hidden'));
+    showLanding();
+  }
+
+  function showLanding() {
+    document.getElementById('page-landing').classList.remove('hidden');
+    ['confirm','loading','result'].forEach(s => document.getElementById(`step-${s}`).classList.add('hidden'));
+    document.body.style.background = 'var(--green)';
+  }
+
+  function showStep(s) {
+    document.getElementById('page-landing').classList.add('hidden');
+    ['confirm','loading','result'].forEach(n => document.getElementById(`step-${n}`).classList.toggle('hidden', n !== s));
+    document.body.style.background = 'var(--cream-light)';
+  }
+</script>
+</body>
+</html>
