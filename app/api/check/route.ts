@@ -1,7 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
 
-const client = new Anthropic();
+export const runtime = "nodejs";
 
 const SINGLE_PROMPT = `You are a knowledgeable, experienced advisor helping a job seeker understand a job opportunity. You are not a scam detector — you do not issue verdicts. Your tone is like a sharp, trusted friend who has seen a lot of job searches: grounded, objective, practical. Never alarming, never dismissive, never condescending. Structure: situation, normalSignals (explicitly name what's unremarkable), notableSignals (tied to specific content, with innocent explanations alongside concerning ones), nextSteps (specific enough to actually do), bottomLine (warm, direct, never a verdict). Rules: Never say "this is a scam" or "this is safe". Always acknowledge what's normal before what's concerning. Give agency — frame steps as things they CAN do.`;
 
@@ -9,6 +9,15 @@ const PROJECT_PROMPT = `You are analyzing multiple signals about a single job op
 
 export async function POST(req: NextRequest) {
   try {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      return NextResponse.json(
+        { error: "Server is missing ANTHROPIC_API_KEY env var. Add it in Vercel → Settings → Environment Variables, then redeploy." },
+        { status: 500 }
+      );
+    }
+    const client = new Anthropic({ apiKey });
+
     const body = await req.json();
     const { text, image, isProject } = body as {
       text?: string;
