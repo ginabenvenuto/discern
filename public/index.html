@@ -1532,33 +1532,25 @@
   }
 
   async function handleConfirm() {
-    const key = localStorage.getItem('discern_key') || '';
-    if (!key) {
-      const el = document.getElementById('confirm-error');
-      el.textContent = 'No API key found. Open the browser console and run: localStorage.setItem("discern_key", "your-key-here")';
-      el.classList.remove('hidden'); return;
-    }
     document.getElementById('confirm-error').classList.add('hidden');
     showStep('loading');
 
-    const msgs = [];
-    if (imageData) msgs.push({ type: 'image', source: { type: 'base64', media_type: imageData.mediaType, data: imageData.base64 } });
-    msgs.push({ type: 'text', text: (scrubbedText ? `Here is the content to analyze:\n\n${scrubbedText}` : 'Please analyze the image above.') + '\n\nRespond with raw JSON only (no markdown):\n{"situation":"...","normalSignals":["..."],"notableSignals":[{"observation":"...","context":"...","weight":"low|medium|high"}],"nextSteps":["...","...","..."],"bottomLine":"..."}' });
+    const body = { isProject: isProjectAnalysis };
+    if (scrubbedText) body.text = scrubbedText;
+    if (imageData) body.image = { data: imageData.base64, mediaType: imageData.mediaType };
 
     try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
+      const res = await fetch('/api/check', {
         method: 'POST',
-        headers: { 'x-api-key': key, 'anthropic-version': '2023-06-01', 'content-type': 'application/json', 'anthropic-dangerous-direct-browser-access': 'true' },
-        body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 2048,
-          system: isProjectAnalysis
-            ? `You are analyzing multiple signals about a single job opportunity collected over time. Triangulate across ALL of them — note patterns, consistencies, and inconsistencies. Your analysis should be richer and more specific than a single-signal check because you have the fuller picture. Same tone: grounded, practical, like a trusted friend. No verdicts. Always acknowledge what looks normal. Give specific next steps. Respond in the same JSON format.`
-            : `You are a knowledgeable, experienced advisor helping a job seeker understand a job opportunity. You are not a scam detector — you do not issue verdicts. Your tone is like a sharp, trusted friend who has seen a lot of job searches: grounded, objective, practical. Never alarming, never dismissive, never condescending. Structure: situation, normalSignals (explicitly name what's unremarkable), notableSignals (tied to specific content, with innocent explanations alongside concerning ones), nextSteps (specific enough to actually do), bottomLine (warm, direct, never a verdict). Rules: Never say "this is a scam" or "this is safe". Always acknowledge what's normal before what's concerning. Give agency — frame steps as things they CAN do.`,
-          messages: [{ role: 'user', content: msgs }] })
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(body),
       });
-      if (!res.ok) { const e = await res.json(); throw new Error(e.error?.message || 'API error'); }
+      if (!res.ok) {
+        const e = await res.json().catch(() => ({}));
+        throw new Error(e.error || 'Something went wrong. Please try again.');
+      }
       const data = await res.json();
-      const raw = data.content[0].text.replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'').trim();
-      renderResult(JSON.parse(raw));
+      renderResult(data);
       showStep('result');
     } catch(err) {
       showStep('confirm');
