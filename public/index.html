@@ -220,6 +220,15 @@
       transform: translateY(-1px);
     }
     .mode-tab:active { transform: translateY(0); }
+    .mode-tab.disabled {
+      color: var(--ink-light);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    .mode-tab.disabled:hover {
+      background: transparent;
+      transform: none;
+    }
 
     /* Quick check pane */
     .pane { display: block; }
@@ -271,6 +280,12 @@
     }
     .attach-btn:active { transform: translateY(0); }
 
+    .img-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
     .img-chip {
       display: flex;
       align-items: center;
@@ -1151,7 +1166,7 @@
         <!-- Tabs -->
         <div class="mode-tabs">
           <button class="mode-tab active" id="tab-quick" onclick="switchTab('quick')">Quick Check</button>
-          <button class="mode-tab" id="tab-project" onclick="switchTab('project')">Project Mode</button>
+          <button class="mode-tab disabled" id="tab-project" disabled title="Coming soon">Project Mode <span style="opacity:0.6;font-size:10px">coming soon</span></button>
         </div>
 
         <!-- Quick Check pane -->
@@ -1166,10 +1181,7 @@
                 <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
                 Attach screenshot
               </button>
-              <div id="img-chip" class="img-chip hidden">
-                <span id="img-chip-name"></span>
-                <button onclick="removeImage()">×</button>
-              </div>
+              <div id="img-chips" class="img-chips hidden"></div>
             </div>
             <button class="submit-btn" id="submit-btn" onclick="handleReview()" disabled>
               Check this <span class="submit-btn-arrow">→</span>
@@ -1185,7 +1197,7 @@
           <div id="proj-view-new" class="proj-view hidden"></div>
         </div>
       </div>
-      <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/gif" style="display:none" onchange="handleImageUpload(event)" />
+      <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/gif" multiple style="display:none" onchange="handleImageUpload(event)" />
 
       <p class="hero-footnote">No account needed &nbsp;·&nbsp; Nothing stored &nbsp;·&nbsp; Private by design &nbsp;·&nbsp; Free to use</p>
     </div>
@@ -1424,6 +1436,9 @@
   let activeProjectId = null;
   let selectedSignalType = 'Job posting';
   let isProjectAnalysis = false;
+  const MAX_IMAGES = 5;
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB per image
+  let imageDataArray = [];
 
   // ── Animated placeholder ─────────────────────────
   (function() {
@@ -1692,33 +1707,66 @@
     }
   });
 
+  function renderImageChips() {
+    const container = document.getElementById('img-chips');
+    if (imageDataArray.length === 0) {
+      container.classList.add('hidden');
+      return;
+    }
+    container.classList.remove('hidden');
+    container.innerHTML = imageDataArray.map((img, i) => `
+      <div class="img-chip">
+        <span>${img.fileName}</span>
+        <button type="button" onclick="removeImageAt(${i})">×</button>
+      </div>
+    `).join('');
+  }
+
   function handleImageFile(file) {
+    if (imageDataArray.length >= MAX_IMAGES) {
+      alert(`You can upload up to ${MAX_IMAGES} images.`);
+      return;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      alert(`File "${file.name}" is too large. Max 5MB per image.`);
+      return;
+    }
     const reader = new FileReader();
     reader.onload = ev => {
       const url = ev.target.result;
-      imageData = { base64: url.split(',')[1], mediaType: file.type, fileName: file.name };
-      document.getElementById('img-chip-name').textContent = file.name;
-      document.getElementById('img-chip').classList.remove('hidden');
+      imageDataArray.push({
+        base64: url.split(',')[1],
+        mediaType: file.type,
+        fileName: file.name
+      });
+      renderImageChips();
       updateBtn();
     };
     reader.readAsDataURL(file);
   }
 
+  function removeImageAt(index) {
+    imageDataArray.splice(index, 1);
+    renderImageChips();
+    updateBtn();
+  }
+
+  function removeAllImages() {
+    imageDataArray = [];
+    document.getElementById('file-input').value = '';
+    renderImageChips();
+    updateBtn();
+  }
+
   function updateBtn() {
-    const has = document.getElementById('main-input').value.trim().length > 0 || imageData;
+    const has = document.getElementById('main-input').value.trim().length > 0 || imageDataArray.length > 0;
     document.getElementById('submit-btn').disabled = !has;
   }
 
   function handleImageUpload(e) {
-    const file = e.target.files[0];
-    if (file) handleImageFile(file);
-  }
-
-  function removeImage() {
-    imageData = null;
-    document.getElementById('file-input').value = '';
-    document.getElementById('img-chip').classList.add('hidden');
-    updateBtn();
+    const files = Array.from(e.target.files);
+    files.forEach(file => handleImageFile(file));
+    e.target.value = '';
   }
 
   function scrubPII(text) {
@@ -1743,8 +1791,13 @@
       document.getElementById('conf-no-redaction').classList.remove('hidden');
       document.getElementById('conf-redaction').classList.add('hidden');
     }
-    if (imageData) { document.getElementById('conf-image-name').textContent = imageData.fileName; document.getElementById('conf-image').classList.remove('hidden'); }
-    else document.getElementById('conf-image').classList.add('hidden');
+    if (imageDataArray.length > 0) {
+      const label = imageDataArray.length === 1 ? '1 screenshot' : `${imageDataArray.length} screenshots`;
+      document.getElementById('conf-image-name').textContent = label;
+      document.getElementById('conf-image').classList.remove('hidden');
+    } else {
+      document.getElementById('conf-image').classList.add('hidden');
+    }
     if (scrubbedText) { document.getElementById('conf-text-preview').textContent = scrubbedText; document.getElementById('conf-text').classList.remove('hidden'); }
     else document.getElementById('conf-text').classList.add('hidden');
 
@@ -1757,7 +1810,12 @@
 
     const body = { isProject: isProjectAnalysis };
     if (scrubbedText) body.text = scrubbedText;
-    if (imageData) body.image = { data: imageData.base64, mediaType: imageData.mediaType };
+    if (imageDataArray.length > 0) {
+      body.images = imageDataArray.map(img => ({
+        data: img.base64,
+        mediaType: img.mediaType
+      }));
+    }
 
     try {
       const res = await fetch('/api/check', {
@@ -1803,7 +1861,10 @@
     const textEl = document.getElementById('result-receipt-text');
     const tags = [];
     if (scrubbedText) tags.push('Text');
-    if (imageData)    tags.push('Screenshot');
+    if (imageDataArray.length > 0) {
+      const label = imageDataArray.length === 1 ? 'Screenshot' : `${imageDataArray.length} screenshots`;
+      tags.push(label);
+    }
     if (isProjectAnalysis) tags.push('Project — multiple signals');
     tagsEl.innerHTML = tags.map(t => `<span class="receipt-tag">${escapeHTML(t)}</span>`).join('');
 
@@ -1811,8 +1872,9 @@
       const truncated = scrubbedText.length > 480 ? scrubbedText.slice(0, 480) + '…' : scrubbedText;
       textEl.textContent = truncated;
       textEl.classList.toggle('has-fade', scrubbedText.length > 480);
-    } else if (imageData) {
-      textEl.textContent = `Screenshot: ${imageData.fileName}`;
+    } else if (imageDataArray.length > 0) {
+      const label = imageDataArray.length === 1 ? imageDataArray[0].fileName : `${imageDataArray.length} screenshots`;
+      textEl.textContent = label;
       textEl.classList.remove('has-fade');
     } else {
       textEl.textContent = '';
@@ -1905,7 +1967,7 @@
 
   function handleReset() {
     document.getElementById('main-input').value = '';
-    removeImage(); scrubbedText = ''; redactions = []; isProjectAnalysis = false;
+    removeAllImages(); scrubbedText = ''; redactions = []; isProjectAnalysis = false;
     ['conf-redaction','conf-no-redaction','conf-image','conf-text','confirm-error'].forEach(id => document.getElementById(id).classList.add('hidden'));
     showLanding();
   }

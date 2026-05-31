@@ -99,25 +99,28 @@ export async function POST(req: NextRequest) {
     const client = new Anthropic({ apiKey });
 
     const body = await req.json();
-    const { text, image, isProject } = body as {
+    const { text, image, images, isProject } = body as {
       text?: string;
       image?: { data: string; mediaType: string };
+      images?: Array<{ data: string; mediaType: string }>;
       isProject?: boolean;
     };
 
-    if (!text && !image) {
+    if (!text && !image && !images) {
       return NextResponse.json({ error: "No content provided" }, { status: 400 });
     }
 
     const userContent: Anthropic.MessageParam["content"] = [];
 
-    if (image) {
+    // Support both single image (legacy) and multiple images
+    const imagesToProcess = images || (image ? [image] : []);
+    for (const img of imagesToProcess) {
       userContent.push({
         type: "image",
         source: {
           type: "base64",
-          media_type: image.mediaType as "image/jpeg" | "image/png" | "image/gif" | "image/webp",
-          data: image.data,
+          media_type: img.mediaType as "image/jpeg" | "image/png" | "image/gif" | "image/webp",
+          data: img.data,
         },
       });
     }
