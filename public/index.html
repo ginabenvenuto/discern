@@ -999,25 +999,17 @@
       font-size: 24px; font-weight: 500; font-style: italic;
       line-height: 1.6; letter-spacing: -0.01em; color: var(--cream-light);
       max-width: 680px;
+      margin-bottom: 28px;
     }
-
-    /* Disclaimer section */
-    .disclaimer-block {
-      background: var(--cream);
-      margin-top: 32px;
-      padding: 24px;
-      border-radius: 12px;
-      border: 1px solid var(--sand);
-    }
-    .disclaimer-title {
-      font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--ink-mid);
-      margin-bottom: 10px;
-    }
-    .disclaimer-text {
-      font-size: 13px; line-height: 1.6; color: var(--ink-mid);
+    .read-disclaimer {
+      font-size: 13px; line-height: 1.65; color: rgba(244,239,230,0.75);
       margin: 0;
     }
+    .read-disclaimer a {
+      color: rgba(244,239,230,0.9);
+      text-decoration: underline;
+    }
+    .read-disclaimer a:hover { color: var(--cream-light); }
 
     /* Legal modal */
     .legal-modal {
@@ -1409,14 +1401,7 @@
       <div class="read-inner">
         <p class="read-label">The read</p>
         <p class="read-text" id="result-bottom-line"></p>
-      </div>
-    </div>
-
-    <!-- Disclaimer -->
-    <div class="result-inner">
-      <div class="disclaimer-block">
-        <p class="disclaimer-title">About this analysis</p>
-        <p class="disclaimer-text">Discern uses AI and can get things wrong. Treat this as a starting point, not a final answer. <a href="#" onclick="openLegalModal(event)">Learn more about how we work</a>.</p>
+        <p class="read-disclaimer">Discern uses AI and can get things wrong. Treat this as a starting point, not a final answer. <a href="#" onclick="openLegalModal(event)">Learn more about how we work</a>.</p>
       </div>
     </div>
 
