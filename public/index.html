@@ -22,6 +22,8 @@
       --ink-light:   #7A9486;
       --border:      rgba(255,255,255,0.15);
       --border-light:#D4CFC9;
+      --sage:        #5F8269;
+      --sand:        #CAC09C;
     }
 
     html { font-size: 16px; scroll-behavior: smooth; }
@@ -805,62 +807,186 @@
     .loading-text { font-size: 15px; color: var(--ink-mid); }
 
     /* ══ RESULT ═══════════════════════════════════ */
-    .result-section {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 0 24px;
+    .result-page { background: var(--cream-light); flex: 1; }
+    .result-inner { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+    /* 1. Input receipt — Forest background */
+    .receipt-wrap { background: var(--green); padding: 32px 0 36px; }
+    .receipt-inner { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+    .receipt-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(244,239,230,0.55);
+      margin-bottom: 14px;
+    }
+    .receipt-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .receipt-tag {
+      font-size: 11px; font-weight: 500;
+      padding: 4px 10px; border-radius: 999px;
+      background: rgba(244,239,230,0.10);
+      color: rgba(244,239,230,0.85);
+      border: 1px solid rgba(244,239,230,0.18);
+    }
+    .receipt-text {
+      font-size: 14px; line-height: 1.6;
+      color: rgba(244,239,230,0.75);
+      max-height: 84px; overflow: hidden;
+      position: relative;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .receipt-text.has-fade::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 32px;
+      background: linear-gradient(to bottom, rgba(44,74,56,0), var(--green));
+      pointer-events: none;
     }
 
-    .result-row {
+    /* 2. The situation — prose */
+    .result-block { padding: 48px 0 8px; }
+    .result-block-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--sage);
+      margin-bottom: 14px;
+    }
+    .result-situation-text {
+      font-size: 18px; line-height: 1.7; color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* 3. Evaluation — 2×2 grid */
+    .eval-block { padding: 40px 0 8px; }
+    .eval-grid {
       display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 0 32px;
-      border-top: 1px solid var(--border-light);
-      padding: 32px 0;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--sand);
+      border: 1px solid var(--sand);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 16px;
     }
-
-    .result-row-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      padding-top: 3px;
-      line-height: 1.5;
+    .eval-card {
+      background: var(--cream-light);
+      padding: 20px 22px;
+      cursor: pointer;
+      transition: background 0.18s;
+      border: none;
+      text-align: left;
+      font-family: inherit;
     }
-
-    .result-situation { font-size: 17px; line-height: 1.72; color: var(--ink); }
-
-    .signal-item {
-      display: flex; gap: 12px;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border-light);
-      font-size: 14px; color: var(--ink-mid); line-height: 1.6;
+    .eval-card:hover { background: #ECE6D9; }
+    .eval-card.active { background: var(--cream); }
+    .eval-card-header {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
     }
-    .signal-item:last-child { border-bottom: none; }
-    .signal-dash { color: var(--border-light); flex-shrink: 0; }
-
-    .notable-item {
+    .eval-card-dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .eval-card-dot.sage { background: var(--sage); }
+    .eval-card-dot.sand { background: var(--sand); border: 1px solid #B5A87E; }
+    .eval-card-name {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--ink-mid);
+    }
+    .eval-card-status {
+      font-size: 14px; font-weight: 500; color: var(--ink);
+      line-height: 1.45;
+    }
+    .eval-card-expand {
+      margin-top: 10px; font-size: 11px; color: var(--sage);
+      font-weight: 500;
+    }
+    .eval-detail {
+      background: var(--cream);
+      border: 1px solid var(--sand);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 16px;
+    }
+    .eval-detail-title {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--sage);
+      margin-bottom: 14px;
+    }
+    .eval-signal {
       padding: 14px 0;
-      border-bottom: 1px solid var(--border-light);
+      border-bottom: 1px solid rgba(202,192,156,0.45);
+      display: grid;
+      grid-template-columns: 16px 1fr;
+      gap: 14px;
     }
-    .notable-item:last-child { border-bottom: none; }
-    .notable-obs { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 5px; line-height: 1.45; }
-    .notable-ctx { font-size: 14px; color: var(--ink-mid); line-height: 1.65; }
-
-    .step-item {
-      display: flex; gap: 14px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border-light);
-      font-size: 14px; color: var(--ink-mid); line-height: 1.6;
+    .eval-signal:last-child { border-bottom: none; }
+    .eval-signal-dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      margin-top: 7px;
     }
-    .step-item:last-child { border-bottom: none; }
-    .step-n { font-size: 11px; font-weight: 600; color: var(--ink-light); flex-shrink: 0; padding-top: 2px; min-width: 20px; }
+    .eval-signal-dot.sage { background: var(--sage); }
+    .eval-signal-dot.sand { background: var(--sand); border: 1px solid #B5A87E; }
+    .eval-signal-obs {
+      font-size: 14px; font-weight: 500; color: var(--ink);
+      line-height: 1.5; margin-bottom: 5px;
+    }
+    .eval-signal-ctx {
+      font-size: 13px; color: var(--ink-mid); line-height: 1.6;
+    }
 
-    .bottom-line-text {
+    /* 4. Next steps */
+    .steps-block { padding: 24px 0 8px; }
+    .next-step {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(202,192,156,0.45);
+    }
+    .next-step:last-child { border-bottom: none; }
+    .next-step-num {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--green);
+      color: var(--cream-light);
+      font-size: 12px; font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .next-step-action {
+      font-size: 15px; font-weight: 600; color: var(--ink);
+      line-height: 1.4; margin-bottom: 5px;
+    }
+    .next-step-detail {
+      font-size: 13px; color: var(--ink-mid); line-height: 1.6;
+    }
+    .next-step-query {
+      display: inline-block;
+      margin-top: 10px;
+      font-family: ui-monospace, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      background: rgba(95,130,105,0.08);
+      border: 1px solid rgba(95,130,105,0.22);
+      color: var(--green);
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      word-break: break-word;
+      max-width: 100%;
+    }
+    .next-step-query:hover { background: rgba(95,130,105,0.14); }
+
+    /* 5. The Read — Forest background bottom block */
+    .read-block {
+      background: var(--green);
+      margin-top: 48px;
+      padding: 40px 0 48px;
+    }
+    .read-inner { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+    .read-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(244,239,230,0.55);
+      margin-bottom: 14px;
+    }
+    .read-text {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 22px; font-weight: 600; font-style: italic;
-      line-height: 1.5; color: var(--ink);
+      font-size: 24px; font-weight: 500; font-style: italic;
+      line-height: 1.5; color: var(--cream-light);
     }
 
     /* Project prompt after result */
@@ -916,7 +1042,10 @@
       .modes-grid, .privacy-grid { grid-template-columns: 1fr; }
       .section { padding: 56px 20px; }
       footer { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
-      .result-row { grid-template-columns: 1fr; gap: 8px; }
+      .eval-grid { grid-template-columns: 1fr; }
+      .result-inner, .receipt-inner, .read-inner { padding-left: 20px; padding-right: 20px; }
+      .result-block { padding-top: 36px; }
+      .eval-block { padding-top: 32px; }
       .result-row-label { font-size: 9px; }
       .project-prompt-inner { flex-direction: column; align-items: flex-start; }
     }
@@ -1169,32 +1298,42 @@
     <button class="step-back" onclick="handleReset()">← New check</button>
   </div>
 
-  <div style="background:var(--cream-light);flex:1">
-    <div style="max-width:720px;margin:0 auto;padding:40px 24px 0">
-      <p style="font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-light);margin-bottom:6px">Your read</p>
-      <p style="font-size:13px;color:var(--ink-light)">Based on what you shared — no account needed, nothing stored.</p>
+  <div class="result-page">
+    <!-- 1. Input receipt — Forest background -->
+    <div class="receipt-wrap">
+      <div class="receipt-inner">
+        <p class="receipt-label">You shared</p>
+        <div class="receipt-tags" id="result-receipt-tags"></div>
+        <p class="receipt-text" id="result-receipt-text"></p>
+      </div>
     </div>
 
-    <div class="result-section">
-      <div class="result-row">
-        <p class="result-row-label">What's going on</p>
-        <p class="result-situation" id="result-situation"></p>
+    <div class="result-inner">
+      <!-- 2. The situation -->
+      <div class="result-block">
+        <p class="result-block-label">The situation</p>
+        <p class="result-situation-text" id="result-situation"></p>
       </div>
-      <div class="result-row" id="result-normal-row">
-        <p class="result-row-label">What looks normal</p>
-        <div id="result-normal-list"></div>
+
+      <!-- 3. The evaluation — 2×2 grid -->
+      <div class="eval-block">
+        <p class="result-block-label">The evaluation</p>
+        <div class="eval-grid" id="result-eval-grid"></div>
+        <div class="eval-detail hidden" id="result-eval-detail"></div>
       </div>
-      <div class="result-row" id="result-notable-row">
-        <p class="result-row-label">Worth noting</p>
-        <div id="result-notable-list"></div>
+
+      <!-- 4. What you can do next -->
+      <div class="steps-block">
+        <p class="result-block-label">What you can do next</p>
+        <div id="result-next-steps"></div>
       </div>
-      <div class="result-row" id="result-steps-row">
-        <p class="result-row-label">What to do now</p>
-        <div id="result-steps-list"></div>
-      </div>
-      <div class="result-row">
-        <p class="result-row-label">Bottom line</p>
-        <p class="bottom-line-text" id="result-bottom-line"></p>
+    </div>
+
+    <!-- 5. The read — Forest bottom block -->
+    <div class="read-block">
+      <div class="read-inner">
+        <p class="read-label">The read</p>
+        <p class="read-text" id="result-bottom-line"></p>
       </div>
     </div>
 
@@ -1570,18 +1709,131 @@
     }
   }
 
+  const EVAL_CATS = [
+    { key: 'contactAndChannel', label: 'Contact & Channel' },
+    { key: 'identity',          label: 'Identity' },
+    { key: 'processAndOffer',   label: 'Process & Offer' },
+    { key: 'moneyAndPayment',   label: 'Money & Payment' },
+  ];
+
+  function escapeHTML(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
+  }
+
+  function categoryDotClass(cat) {
+    if (!cat?.signals?.length) return 'sage';
+    return cat.signals.some(s => s?.type === 'worth_noting') ? 'sand' : 'sage';
+  }
+
+  function renderReceipt() {
+    const tagsEl = document.getElementById('result-receipt-tags');
+    const textEl = document.getElementById('result-receipt-text');
+    const tags = [];
+    if (scrubbedText) tags.push('Text');
+    if (imageData)    tags.push('Screenshot');
+    if (isProjectAnalysis) tags.push('Project — multiple signals');
+    tagsEl.innerHTML = tags.map(t => `<span class="receipt-tag">${escapeHTML(t)}</span>`).join('');
+
+    if (scrubbedText) {
+      const truncated = scrubbedText.length > 480 ? scrubbedText.slice(0, 480) + '…' : scrubbedText;
+      textEl.textContent = truncated;
+      textEl.classList.toggle('has-fade', scrubbedText.length > 480);
+    } else if (imageData) {
+      textEl.textContent = `Screenshot: ${imageData.fileName}`;
+      textEl.classList.remove('has-fade');
+    } else {
+      textEl.textContent = '';
+    }
+  }
+
+  function renderEvalDetail(cat, label) {
+    const detailEl = document.getElementById('result-eval-detail');
+    if (!cat || !cat.signals?.length) {
+      detailEl.classList.add('hidden');
+      return;
+    }
+    const signals = cat.signals.map(s => `
+      <div class="eval-signal">
+        <div class="eval-signal-dot ${s.type === 'worth_noting' ? 'sand' : 'sage'}"></div>
+        <div>
+          <p class="eval-signal-obs">${escapeHTML(s.observation)}</p>
+          <p class="eval-signal-ctx">${escapeHTML(s.context)}</p>
+        </div>
+      </div>
+    `).join('');
+    detailEl.innerHTML = `
+      <p class="eval-detail-title">${escapeHTML(label)} — detail</p>
+      ${signals}
+    `;
+    detailEl.classList.remove('hidden');
+  }
+
   function renderResult(r) {
-    document.getElementById('result-situation').textContent = r.situation;
-    const nl = document.getElementById('result-normal-list');
-    if (r.normalSignals?.length) { nl.innerHTML = r.normalSignals.map(s => `<div class="signal-item"><span class="signal-dash">—</span><span>${s}</span></div>`).join(''); document.getElementById('result-normal-row').classList.remove('hidden'); }
-    else document.getElementById('result-normal-row').classList.add('hidden');
-    const ntl = document.getElementById('result-notable-list');
-    if (r.notableSignals?.length) { ntl.innerHTML = r.notableSignals.map(s => `<div class="notable-item"><p class="notable-obs">${s.observation}</p><p class="notable-ctx">${s.context}</p></div>`).join(''); document.getElementById('result-notable-row').classList.remove('hidden'); }
-    else document.getElementById('result-notable-row').classList.add('hidden');
-    const sl = document.getElementById('result-steps-list');
-    if (r.nextSteps?.length) { sl.innerHTML = r.nextSteps.map((s,i) => `<div class="step-item"><span class="step-n">0${i+1}</span><span>${s}</span></div>`).join(''); document.getElementById('result-steps-row').classList.remove('hidden'); }
-    else document.getElementById('result-steps-row').classList.add('hidden');
-    document.getElementById('result-bottom-line').textContent = r.bottomLine;
+    // Input receipt
+    renderReceipt();
+
+    // 2. Situation
+    document.getElementById('result-situation').textContent = r.situation || '';
+
+    // 3. Evaluation — 2×2 grid
+    const grid = document.getElementById('result-eval-grid');
+    const evalData = r.evaluation || {};
+    grid.innerHTML = EVAL_CATS.map((c, i) => {
+      const cat = evalData[c.key] || { status: '', signals: [] };
+      const dot = categoryDotClass(cat);
+      const hasDetail = (cat.signals || []).length > 0;
+      return `
+        <button type="button" class="eval-card" data-idx="${i}">
+          <div class="eval-card-header">
+            <span class="eval-card-dot ${dot}"></span>
+            <span class="eval-card-name">${escapeHTML(c.label)}</span>
+          </div>
+          <p class="eval-card-status">${escapeHTML(cat.status)}</p>
+          ${hasDetail ? `<p class="eval-card-expand">Tap to expand →</p>` : ''}
+        </button>
+      `;
+    }).join('');
+    document.getElementById('result-eval-detail').classList.add('hidden');
+    grid.querySelectorAll('.eval-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const idx = parseInt(card.dataset.idx, 10);
+        const isAlreadyActive = card.classList.contains('active');
+        grid.querySelectorAll('.eval-card').forEach(c => c.classList.remove('active'));
+        if (isAlreadyActive) {
+          document.getElementById('result-eval-detail').classList.add('hidden');
+        } else {
+          card.classList.add('active');
+          renderEvalDetail(evalData[EVAL_CATS[idx].key], EVAL_CATS[idx].label);
+        }
+      });
+    });
+
+    // 4. Next steps
+    const stepsEl = document.getElementById('result-next-steps');
+    const steps = r.nextSteps || [];
+    stepsEl.innerHTML = steps.map((s, i) => `
+      <div class="next-step">
+        <span class="next-step-num">${i + 1}</span>
+        <div>
+          <p class="next-step-action">${escapeHTML(s.action || '')}</p>
+          <p class="next-step-detail">${escapeHTML(s.detail || '')}</p>
+          ${s.query ? `<span class="next-step-query" title="Click to copy">${escapeHTML(s.query)}</span>` : ''}
+        </div>
+      </div>
+    `).join('');
+    stepsEl.querySelectorAll('.next-step-query').forEach(q => {
+      q.addEventListener('click', () => {
+        navigator.clipboard?.writeText(q.textContent || '');
+        const original = q.textContent;
+        q.textContent = 'Copied';
+        setTimeout(() => { q.textContent = original; }, 1200);
+      });
+    });
+
+    // 5. Bottom line / The Read
+    document.getElementById('result-bottom-line').textContent = r.bottomLine || '';
   }
 
   function handleReset() {

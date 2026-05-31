@@ -61,318 +61,213 @@ their time, or that if they proceed, they're doing so with eyes open.
 
 ---
 
-## Who This Is For
+## Output Philosophy
 
-**Anyone actively job searching** — inbound (responding to recruiter outreach) or outbound
-(applying to roles they found). All experience levels. All ages.
+**Discern is a thought partner, not a detector. The output never issues a verdict, never
+tells the user what to do, and never transfers the decision to the product.**
 
-The psychological profile that cuts across all demographics:
+The user arrives uncertain. They should leave feeling clearer and more capable —
+regardless of what the signals show.
 
-> Someone who senses something — about a message, a posting, a recruiter, an offer —
-> and wants to understand it more clearly before deciding what to do.
+Every output is grounded in what was actually submitted. No generic red flag lists.
+No pattern-matching to a database. Every observation is tied to something specific
+in the content submitted.
 
-They are not naive. They are not helpless. They already have instincts. What they need is
-a clear-eyed perspective from outside the pressure they're inside of, plus the practical
-knowledge to know what to do next.
-
-**High-priority segments based on exposure data:**
-- Gen Z / early-career: highest scam exposure (32% victimized), most likely to ignore
-  red flags due to competitive pressure — most vulnerable
-- Mid-career in transition: under financial pressure, getting unsolicited recruiter outreach,
-  less familiar with current job market norms
-- Career changers: entering unfamiliar industries, don't know what "normal" looks like
+The tone is a knowledgeable friend who has seen a lot of job searches — direct, calm,
+and practical. Never alarming. Never scolding. The person is already under pressure.
+The output should reduce that, not compound it.
 
 ---
 
-## What It Analyzes
+## Response Structure — The Five Parts
 
-The product accepts and intelligently handles all of the following. Every input type flows
-through the same analysis pipeline — the output format and principles are consistent regardless
-of what was submitted.
+Every response follows this structure, in this order, every time.
 
-### Phase 1 (build first)
-- **Pasted text** — job post, recruiter message, LinkedIn DM, WhatsApp message,
-  email thread, offer letter, any written communication
-- **Screenshot upload** — image of a conversation, email, job listing, recruiter profile,
-  company page, or any other visible content
+### 1. The Situation
+A brief plain-English read of what was submitted and what kind of interaction this appears
+to be. Orients before it evaluates. Does not lead with concerns. Reads as a paragraph,
+not a list — prose signals "this is context, not judgment."
 
-### Phase 2
-- **URL input** — job listing (Indeed, LinkedIn, Glassdoor), company website,
-  LinkedIn recruiter profile, LinkedIn company page
-- App fetches and extracts meaningful text server-side, then passes to analysis pipeline
+### 2. The Evaluation — Four Categories
+Every analysis covers all four categories. Each category gets a one-line status statement
+and expandable detail. The one-line status is the key cue — scannable in two seconds.
 
-### Phase 3 — Project Mode
-- User creates a named project for a single opportunity (e.g. "Head of Product role at Acme")
-- Adds submissions over time: first the DM, then the job post, then the recruiter's profile,
-  then the follow-up email
-- Tool triangulates across all submissions for that project, not just the latest one
-- The analysis deepens and sharpens as more context is added
-- **All project data lives in the user's browser (IndexedDB). Nothing touches a server.**
+**Contact & Channel** — How the outreach happened, what platform, whether there was
+pressure to move the conversation elsewhere, and whether the communication style matches
+normal recruiter behavior. Staying on-platform is the clearest legitimacy signal. Requests
+to move to WhatsApp, personal email, or Telegram — especially early — are concern signals.
 
-### Phase 4 — Chrome Extension
-- Works in-page on LinkedIn, Indeed, Gmail, WhatsApp Web
-- User activates analysis on the page they're currently looking at — no switching tabs,
-  no copy-pasting
-- Same analysis pipeline and output format as the web app
+**Identity — Person & Company** — Whether the recruiter appears to be who they say they
+are, whether the company is verifiable, and whether the two match each other. Profile age,
+employee count, verification badges, company page activity, whether the recruiter appears
+on the company's team page.
+
+**Process & Offer** — Whether the hiring process, timeline, urgency, compensation, and
+role description are consistent with how real hiring works. Unrealistic salary claims,
+vague responsibilities, pressure to decide quickly, no real interview process, offers
+that arrive before any meaningful conversation. Timeline and urgency pressure live here.
+
+**Money & Payment** — Any mention of fees, equipment costs, expenses, crypto, wire
+transfers, or financial requests of any kind. Unambiguous — any financial request early
+in a hiring process is a clear signal regardless of the explanation given. Surface plainly
+and make prominent. Do not soften or add excessive innocent explanations to money signals.
+
+### 3. What You Can Do Next
+Two or three specific, actionable steps. Not "do more research." Specific enough to act
+on right now — including exact search queries, specific questions to ask the recruiter,
+and precise places to look. Each step: bold action phrase + brief detail + optional
+copy-paste query.
+
+### 4. The Read
+Two or three sentences. Where things stand. What to keep in mind. Warm, direct, never
+definitive. The user holds the decision.
 
 ---
 
-## Output Philosophy — The Most Important Thing
+## Tone Rules — Non-Negotiable
 
-**Every analysis should feel like thinking with someone, not being assessed by something.**
+- **Never issue a verdict.** Not "this is a scam." Not "this looks safe."
+- **Never make them feel naive.** The instinct to check is always the right instinct.
+- **Never amplify anxiety.** Avoid: danger, threat, warning, victim, red alert, suspicious.
+  Prefer: worth noting, worth a closer look, worth checking, something to verify.
+- **Always end with agency.** The user holds the decision.
+- **Money signals are the exception to softening.** Contact, identity, and process signals
+  always include innocent explanations alongside concerns. Money signals are named plainly.
 
-The goal of every output is that the user walks away feeling clearer and more capable than
-when they came in — regardless of what the signals actually show.
+---
 
-### Structure of every output
+## Signal Language
 
-1. **What's going on here** — a plain-English read of what was submitted and what kind of
-   situation this appears to be. Sets context before anything else. Does not lead with
-   concerns.
+**Clean signals (sage dot, type: "expected"):**
+- "Stayed on-platform, normal outreach pattern"
+- "Company is verified with 10,000+ employees"
+- "Timeline and role details look as expected"
+- "No financial requests detected"
 
-2. **What looks normal** — explicitly name what is unremarkable or expected. This is not
-   reassurance — it's information. Naming what's normal builds credibility for what comes next
-   and prevents the user from spiraling about things that don't warrant concern.
+**Worth noting (sand dot, type: "worth_noting"):**
+- "Recruiter profile is newer than expected"
+- "Role not yet visible on the company's careers site"
+- "Interview timeline is faster than typical for this type of role"
+- "Salary claim is above market range for this function"
 
-3. **What's worth paying attention to** — specific signals tied directly to the content
-   submitted, not a generic red flag list. Each signal includes:
-   - What was observed (specific, quoted or paraphrased from the submission)
-   - What it could mean — including innocent explanations
-   - How significant it is in context
+**Plain language for money signals:**
+- "Asked for equipment purchase before start date — this is not standard practice"
+- "Requested bank details before an offer letter was issued"
+- "Mentioned a processing fee for background check — legitimate employers cover this"
 
-4. **Practical next steps** — always 2–3 specific, actionable things the user can do
-   right now to understand the opportunity better. Not "be careful." Not "do more research."
-   Specific steps like:
-   - "Ask the recruiter to move the initial call to a LinkedIn Video chat rather than Zoom —
-     legitimate recruiters at established companies are generally fine with this"
-   - "Search '[company name] site:linkedin.com' to confirm this recruiter appears on
-     the company's actual team page"
-   - "Check [company domain]/careers to verify this role is publicly listed"
+---
 
-5. **The bottom line** — 2–3 sentences. Where things stand, what the user should
-   keep in mind as they move forward. Warm, direct, never definitive.
+## What This Framework Never Does
 
-### Tone rules — non-negotiable
-
-- **Never issue a verdict.** Not "this is a scam." Not "this looks safe." The user decides.
-- **Never make them feel naive.** Opening with "this was smart to check" or similar is fine.
-  Implying they should have known better is never fine.
-- **Never amplify anxiety.** Avoid: "danger," "threat," "victim," "warning," "red alert."
-  Prefer: "worth noting," "something to look into," "a pattern to be aware of."
-- **Always end with agency.** The user leaves holding the decision. The output informs —
-  it never instructs.
-- **Acknowledge the pressure.** When the context makes it clear someone is in a competitive
-  situation, it's appropriate to briefly acknowledge that the scrutiny they're applying
-  here is exactly the right instinct, even under pressure.
-
-### Tone examples
-
-❌ "WARNING: Multiple high-risk indicators detected. This is likely a scam. Do not respond."
-
-✅ "This looks like a fairly standard initial recruiter outreach — the job description has
-   specific details around team structure and scope that vague postings usually skip. One
-   thing worth a closer look: the request to move to WhatsApp before any interview has
-   taken place is a pattern that shows up frequently in fraudulent outreach. Real recruiters
-   at established companies generally keep early conversations on the platform where they
-   found you. Here's how you could easily check this out before deciding how to respond..."
+- Says "this is a scam" or "this is safe"
+- Uses alarm language: danger, threat, warning, victim
+- Gives a score, percentage, or confidence rating
+- Uses a traffic light system (red/yellow/green)
+- Tells the user to walk away or to proceed
+- Fills a category with generic advice not tied to the specific submission
+- Leaves a category empty — if nothing notable, say what looks normal
 
 ---
 
 ## The Three Principles — Non-Negotiable
 
-These apply to every design, copy, and engineering decision. If something conflicts with one
-of these, it doesn't ship.
+### 1. Privacy
+- Zero server-side storage. API call → response returns → nothing is written to any database.
+- Client-side PII scrubbing runs in the browser before anything is sent.
+- The scrubbing step is a visible UI feature.
+- Project mode data lives exclusively in IndexedDB.
+- No analytics on content.
 
-### 1. Privacy — the user's data is never ours to keep
+### 2. Tone
+- The output validates the instinct to check before saying anything else.
+- Even in the clearest concerning scenario, the language is empowering not alarming.
+- This applies to UI copy, empty states, error messages, and loading states.
 
-- Zero server-side storage. The API call is made, the response returns, nothing is written
-  to any database.
-- Client-side PII scrubbing runs in the browser before anything is sent:
-  - Email addresses → `[EMAIL REDACTED]`
-  - Phone numbers → `[PHONE REDACTED]`
-  - ID / SSN numbers → `[ID REDACTED]`
-- **The scrubbing step is a visible UI feature, not background processing.**
-  Show the user what was removed and what cleaned text will be sent, before they confirm.
-  This moment builds more trust than any privacy policy.
-- Project mode data lives exclusively in the user's browser (IndexedDB). Never synced.
-- Be transparent about what IS shared: cleaned text goes to Anthropic's Claude API.
-  Say this plainly. Note that Anthropic does not train on API data.
-- No analytics on content — ever.
-
-### 2. Tone — it never makes someone feel stupid or alarmed
-
-- The output validates the instinct to check before it says anything else.
-- Even in the clearest scam scenario, the language is empowering not alarming.
-- The person came here feeling uncertain. They should leave feeling capable.
-- This applies to UI copy, empty states, error messages, and loading states —
-  not just the analysis output.
-
-### 3. Agency — it never decides for the user
-
+### 3. Agency
 - The tool surfaces signals and provides context. The user makes the call.
-- Next steps are framed as things the user *can* do, never *must* do.
-- The product trusts the user's intelligence. It informs; it does not protect.
-- This means no scores, no verdict labels, no traffic light systems.
-  These all transfer the decision to the tool. That's not what this is.
+- No scores, no verdict labels, no traffic lights.
 
 ---
 
-## Claude Prompt Design
-
-### System prompt (use for every analysis call)
-
-```
-You are a knowledgeable, experienced advisor helping a job seeker understand a job opportunity
-and decide whether it deserves their time and trust.
-
-You are not a scam detector. You do not issue verdicts. You think out loud with the person,
-acknowledge nuance and ambiguity, and always end with practical steps they can take.
-
-Your output must follow this structure:
-1. What's going on here — brief plain-English read of the situation
-2. What looks normal — explicitly name what is unremarkable
-3. What's worth paying attention to — specific signals from the content with context
-4. Practical next steps — 2–3 specific, actionable things they can do right now
-5. The bottom line — 2–3 warm, direct sentences
-
-Rules:
-- Never say "this is a scam" or "this is safe" — you don't know, and they decide
-- Tie every observation to specific content submitted — no generic red flag lists
-- Include innocent explanations alongside concerning ones for each signal
-- Use language that is calm, direct, and empowering — never alarming
-- Treat the person as an intelligent adult under real pressure
-```
-
-### Structured JSON output format
+## Structured JSON Output Format
 
 ```json
 {
   "situation": "Plain-English read of what was submitted and what kind of situation this is",
-  "normalSignals": [
-    "Specific thing that is unremarkable or expected — with brief explanation of why"
-  ],
-  "notableSignals": [
-    {
-      "observation": "Specific thing noticed, tied to actual content",
-      "context": "What this could mean — innocent and concerning explanations both",
-      "weight": "low | medium | high"
-    }
-  ],
+  "evaluation": {
+    "contactAndChannel": {
+      "status": "One-line summary — scannable in 2 seconds",
+      "signals": [
+        {
+          "observation": "Specific thing noticed, tied to actual content",
+          "context": "What this means — innocent and concerning explanations both",
+          "type": "expected"
+        }
+      ]
+    },
+    "identity": { "status": "...", "signals": [...] },
+    "processAndOffer": { "status": "...", "signals": [...] },
+    "moneyAndPayment": { "status": "...", "signals": [...] }
+  },
   "nextSteps": [
-    "Specific, actionable step with enough detail to actually do it",
-    "Specific, actionable step",
-    "Specific, actionable step"
+    {
+      "action": "Bold action phrase — what to do",
+      "detail": "How to do it, specific enough to act on right now",
+      "query": "Optional: copy-paste search query or URL"
+    }
   ],
   "bottomLine": "2–3 sentences. Warm, direct, never definitive."
 }
 ```
 
+Signal type values:
+- `expected` → sage dot in UI
+- `worth_noting` → sand dot in UI
+
 ---
 
 ## UI/UX Principles
 
-- **Calm and clear.** The user is already carrying anxiety. The design should reduce it,
-  not add to it. Nothing alarming — not in color, language, iconography, or motion.
-- **No scores, no traffic lights, no verdict badges.** These transfer the decision to the
-  product. The product doesn't decide.
-- **The PII scrubbing moment is prominent and designed well.** It's a trust feature.
-- **Progressive disclosure.** Bottom line and next steps are immediately visible.
-  Details expand below.
-- **Mobile-first.** Suspicious messages arrive on phones.
-- **No account required** for Phase 1–3. Zero friction.
-- **Neutral loading states.** "Taking a look..." not "Scanning for threats..."
-- **Empty and error states follow the same tone rules.** Warm, calm, never alarming.
+### Output page — five visual sections in this order:
+
+1. **Input receipt** (top, Forest background, cream type)
+   Mirrors back what was submitted so they feel heard. Tags for input type.
+
+2. **The situation** (prose, full width, cream background)
+   Plain paragraph. Prose signals "this is context."
+
+3. **The evaluation** (2×2 grid of category cards)
+   Each card: icon + name + one-line status. Tap expands detail below.
+   The 2×2 grid communicates completeness — all four categories were checked.
+   Two dot colors only: sage (expected) and sand (worth noting). No red.
+
+4. **What you can do next** (numbered list)
+   Circle numbers (Forest background). Bold action phrase. Muted detail.
+   Monospace chip for copy-paste queries.
+
+5. **The read** (Forest background, cream type)
+   Dark background = visual signal that this is the summary.
+
+### Visual cues
+- Sage dot — signal is expected / looks normal
+- Sand dot — signal is worth a closer look
+- No red, orange, or traffic light colors anywhere
+- No scores, percentages, or confidence ratings
+- No checkmarks or X marks — dots only
+- Prose for context, numbers for action
+- Monospace chips for copy-paste queries
 
 ---
 
 ## Technical Stack
 
 - **Framework:** Next.js 14 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS
+- **Language:** Static HTML at `public/index.html`, Next.js for API route only
 - **AI:** Anthropic Claude API — `claude-sonnet-4-6`
-- **PII scrubbing:** Client-side regex, runs in the browser before any API call
-- **Image analysis:** Claude vision — pass as base64 in the API messages array
-- **URL fetching:** Next.js API route fetches URL, extracts meaningful text
-  (strip HTML, navigation, boilerplate), passes clean text to Claude
-- **Project mode storage:** IndexedDB via a simple wrapper utility — no server
-- **Chrome Extension:** Manifest V3 (Phase 4)
-- **Deployment:** Vercel — `ANTHROPIC_API_KEY` set as environment variable
-
----
-
-## Build Order
-
-### Phase 1 — MVP (start here)
-- [ ] PII scrubbing utility — client-side regex for email, phone, ID
-- [ ] Input: text paste with live scrubbing preview
-- [ ] Input: screenshot / image upload with preview
-- [ ] Privacy confirmation step — show cleaned text, confirm before sending
-- [ ] API route — receives cleaned text or image, returns structured JSON from Claude
-- [ ] Output rendering — situation → normal signals → notable signals → next steps → bottom line
-- [ ] UI: clean, calm, mobile-first — no scores, no verdict language
-
-### Phase 2 — URL Analysis
-- [ ] URL input field
-- [ ] Server-side fetch + meaningful text extraction (strip HTML boilerplate)
-- [ ] Support: LinkedIn job posts, Indeed listings, company websites, LinkedIn profiles
-- [ ] Same analysis pipeline and output format
-
-### Phase 3 — Project Mode
-- [ ] IndexedDB wrapper utility for local project storage
-- [ ] Create / name a project
-- [ ] Add submissions to a project over time
-- [ ] Triangulation prompt: Claude receives all project submissions together
-- [ ] Project view showing accumulated signals and how the picture has developed
-
-### Phase 4 — Chrome Extension
-- [ ] Manifest V3 scaffold
-- [ ] Content script: inject analysis button on LinkedIn, Indeed, Gmail, WhatsApp Web
-- [ ] Side panel UI — same components as web app
-- [ ] Reads current page content, passes to web app API route
-- [ ] Chrome Web Store submission
-
----
-
-## What We Are Not Building
-
-- A scoring system (0–100, percentages, confidence levels)
-- A verdict engine ("scam" / "safe" / "proceed" / "avoid")
-- A database of known scam domains, companies, or recruiters
-- An account or login system (Phase 1–3)
-- Anything that stores user-submitted content server-side
-- A tool that makes decisions on behalf of the user
-
----
-
-## Competitive Context
-
-| | Existing tools | This product |
-|---|---|---|
-| Core question | "Is this a scam?" | "Can you help me understand this?" |
-| Output | Score + verdict | Situation read + signals + next steps |
-| Tone | Clinical, binary | Clear-eyed, warm, practical |
-| Privacy | Fine print | Visible, designed in |
-| Time horizon | Single scan | Longitudinal — project mode over time |
-| User relationship | Tool to user | Thought partner to person |
-| User outcome | Warned or cleared | Confident and capable to decide |
-
----
-
-## Key Research (LinkedIn 2026)
-
-These numbers should inform every design and copy decision.
-
-- **72%** of professionals already question whether a role is real before applying
-- **57%** are more likely to question legitimacy than a year ago
-- **32% of Gen Z ignores red flags** because the market feels too competitive — our core user
-- **90%** of scams involve moving the conversation off-platform
-- The vulnerability window is the **first message** — over half of off-platform attempts
-  happen before any trust is established
-- **49%** of recruiters say job seekers have proactively asked if a role is genuine —
-  this product helps people do that effectively
-
-Sources: LinkedIn Job Search Safety Pulse 2026 · LinkedIn Talent Research 2026
+- **PII scrubbing:** Client-side regex
+- **Image analysis:** Claude vision — base64 in API messages
+- **Deployment:** Vercel — `ANTHROPIC_API_KEY` set as env var
+- **Production:** `trydiscern.vercel.app`
 
 ---
 
