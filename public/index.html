@@ -857,76 +857,60 @@
       font-family: 'DM Sans', sans-serif;
     }
 
-    /* 3. Evaluation — 2×2 grid */
+    /* 3. Evaluation — stacked cards, fully expanded */
     .eval-block { padding: 40px 0 8px; }
-    .eval-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--sand);
-      border: 1px solid var(--sand);
-      border-radius: 14px;
-      overflow: hidden;
-      margin-bottom: 16px;
+    .eval-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
     .eval-card {
-      background: var(--cream-light);
-      padding: 20px 22px;
-      cursor: pointer;
-      transition: background 0.18s;
-      border: none;
-      text-align: left;
-      font-family: inherit;
+      background: var(--cream);
+      border: 1px solid var(--sand);
+      border-radius: 14px;
+      padding: 24px 28px;
     }
-    .eval-card:hover { background: #ECE6D9; }
-    .eval-card.active { background: var(--cream); }
     .eval-card-header {
-      display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
     }
     .eval-card-dot {
-      width: 9px; height: 9px; border-radius: 50%;
+      width: 10px; height: 10px; border-radius: 50%;
       flex-shrink: 0;
     }
     .eval-card-dot.sage { background: var(--sage); }
     .eval-card-dot.sand { background: var(--sand); border: 1px solid #B5A87E; }
     .eval-card-name {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
       text-transform: uppercase; color: var(--ink-mid);
     }
     .eval-card-status {
-      font-size: 14px; font-weight: 500; color: var(--ink);
-      line-height: 1.45;
+      font-size: 15px; font-weight: 500; color: var(--ink);
+      line-height: 1.5;
+      margin-bottom: 18px;
     }
-    .eval-card-expand {
-      margin-top: 10px; font-size: 11px; color: var(--sage);
-      font-weight: 500;
+
+    /* Subsections within each card */
+    .eval-sub {
+      padding-top: 16px;
+      border-top: 1px solid rgba(202,192,156,0.45);
     }
-    .eval-detail {
-      background: var(--cream);
-      border: 1px solid var(--sand);
-      border-radius: 14px;
-      padding: 24px 28px;
-      margin-bottom: 16px;
+    .eval-sub + .eval-sub { margin-top: 16px; }
+    .eval-sub-label {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ink-mid);
+      margin-bottom: 12px;
     }
-    .eval-detail-title {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--sage);
-      margin-bottom: 14px;
+    .eval-sub-label .eval-card-dot { width: 8px; height: 8px; }
+    .eval-sub-empty {
+      font-size: 13px; color: var(--ink-light); font-style: italic;
+      line-height: 1.5;
     }
+
     .eval-signal {
-      padding: 14px 0;
-      border-bottom: 1px solid rgba(202,192,156,0.45);
-      display: grid;
-      grid-template-columns: 16px 1fr;
-      gap: 14px;
+      padding: 10px 0;
     }
-    .eval-signal:last-child { border-bottom: none; }
-    .eval-signal-dot {
-      width: 9px; height: 9px; border-radius: 50%;
-      margin-top: 7px;
-    }
-    .eval-signal-dot.sage { background: var(--sage); }
-    .eval-signal-dot.sand { background: var(--sand); border: 1px solid #B5A87E; }
+    .eval-signal + .eval-signal { border-top: 1px solid rgba(202,192,156,0.3); }
     .eval-signal-obs {
       font-size: 14px; font-weight: 500; color: var(--ink);
       line-height: 1.5; margin-bottom: 5px;
@@ -1048,10 +1032,10 @@
       .modes-grid, .privacy-grid { grid-template-columns: 1fr; }
       .section { padding: 56px 20px; }
       footer { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
-      .eval-grid { grid-template-columns: 1fr; }
       .result-inner, .receipt-inner, .read-inner { padding-left: 20px; padding-right: 20px; }
       .result-block { padding-top: 36px; }
       .eval-block { padding-top: 32px; }
+      .eval-card { padding: 22px; }
       .result-row-label { font-size: 9px; }
       .project-prompt-inner { flex-direction: column; align-items: flex-start; }
     }
@@ -1321,11 +1305,10 @@
         <p class="result-situation-text" id="result-situation"></p>
       </div>
 
-      <!-- 3. The evaluation — 2×2 grid -->
+      <!-- 3. The evaluation — stacked, fully expanded -->
       <div class="eval-block">
         <p class="result-block-label">The evaluation</p>
-        <div class="eval-grid" id="result-eval-grid"></div>
-        <div class="eval-detail hidden" id="result-eval-detail"></div>
+        <div class="eval-stack" id="result-eval-stack"></div>
       </div>
 
       <!-- 4. What you can do next -->
@@ -1754,26 +1737,48 @@
     }
   }
 
-  function renderEvalDetail(cat, label) {
-    const detailEl = document.getElementById('result-eval-detail');
-    if (!cat || !cat.signals?.length) {
-      detailEl.classList.add('hidden');
-      return;
+  function renderSignalGroup(signals) {
+    if (!signals.length) {
+      return `<p class="eval-sub-empty">Nothing to flag here.</p>`;
     }
-    const signals = cat.signals.map(s => `
+    return signals.map(s => `
       <div class="eval-signal">
-        <div class="eval-signal-dot ${s.type === 'worth_noting' ? 'sand' : 'sage'}"></div>
-        <div>
-          <p class="eval-signal-obs">${escapeHTML(s.observation)}</p>
-          <p class="eval-signal-ctx">${escapeHTML(s.context)}</p>
-        </div>
+        <p class="eval-signal-obs">${escapeHTML(s.observation)}</p>
+        <p class="eval-signal-ctx">${escapeHTML(s.context)}</p>
       </div>
     `).join('');
-    detailEl.innerHTML = `
-      <p class="eval-detail-title">${escapeHTML(label)} — detail</p>
-      ${signals}
+  }
+
+  function renderEvalCard(cat, label) {
+    const data = cat || { status: '', signals: [] };
+    const dot = categoryDotClass(data);
+    const normalSignals = (data.signals || []).filter(s => s?.type !== 'worth_noting');
+    const notableSignals = (data.signals || []).filter(s => s?.type === 'worth_noting');
+    return `
+      <div class="eval-card">
+        <div class="eval-card-header">
+          <span class="eval-card-dot ${dot}"></span>
+          <span class="eval-card-name">${escapeHTML(label)}</span>
+        </div>
+        <p class="eval-card-status">${escapeHTML(data.status)}</p>
+
+        <div class="eval-sub">
+          <p class="eval-sub-label">
+            <span class="eval-card-dot sage"></span>
+            What looks normal
+          </p>
+          ${renderSignalGroup(normalSignals)}
+        </div>
+
+        <div class="eval-sub">
+          <p class="eval-sub-label">
+            <span class="eval-card-dot sand"></span>
+            What's worth noting
+          </p>
+          ${renderSignalGroup(notableSignals)}
+        </div>
+      </div>
     `;
-    detailEl.classList.remove('hidden');
   }
 
   function renderResult(r) {
@@ -1783,38 +1788,12 @@
     // 2. Situation
     document.getElementById('result-situation').textContent = r.situation || '';
 
-    // 3. Evaluation — 2×2 grid
-    const grid = document.getElementById('result-eval-grid');
+    // 3. Evaluation — stacked cards, fully expanded
+    const stack = document.getElementById('result-eval-stack');
     const evalData = r.evaluation || {};
-    grid.innerHTML = EVAL_CATS.map((c, i) => {
-      const cat = evalData[c.key] || { status: '', signals: [] };
-      const dot = categoryDotClass(cat);
-      const hasDetail = (cat.signals || []).length > 0;
-      return `
-        <button type="button" class="eval-card" data-idx="${i}">
-          <div class="eval-card-header">
-            <span class="eval-card-dot ${dot}"></span>
-            <span class="eval-card-name">${escapeHTML(c.label)}</span>
-          </div>
-          <p class="eval-card-status">${escapeHTML(cat.status)}</p>
-          ${hasDetail ? `<p class="eval-card-expand">Tap to expand →</p>` : ''}
-        </button>
-      `;
-    }).join('');
-    document.getElementById('result-eval-detail').classList.add('hidden');
-    grid.querySelectorAll('.eval-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const idx = parseInt(card.dataset.idx, 10);
-        const isAlreadyActive = card.classList.contains('active');
-        grid.querySelectorAll('.eval-card').forEach(c => c.classList.remove('active'));
-        if (isAlreadyActive) {
-          document.getElementById('result-eval-detail').classList.add('hidden');
-        } else {
-          card.classList.add('active');
-          renderEvalDetail(evalData[EVAL_CATS[idx].key], EVAL_CATS[idx].label);
-        }
-      });
-    });
+    stack.innerHTML = EVAL_CATS.map(c =>
+      renderEvalCard(evalData[c.key], c.label)
+    ).join('');
 
     // 4. Next steps
     const stepsEl = document.getElementById('result-next-steps');
