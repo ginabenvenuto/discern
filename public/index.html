@@ -284,15 +284,20 @@
     .img-chip button { background: none; border: none; cursor: pointer; color: var(--ink-light); font-size: 15px; line-height: 1; padding: 0; }
 
     .submit-btn {
-      width: 38px;
       height: 38px;
-      border-radius: 50%;
+      padding: 0 18px;
+      border-radius: 999px;
       background: var(--green);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
       border: none;
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
+      gap: 6px;
       flex-shrink: 0;
       transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
       animation: submit-pulse 2.4s ease-in-out infinite;
@@ -303,17 +308,18 @@
     }
     .submit-btn:hover:not(:disabled) {
       background: var(--green-dark);
-      transform: scale(1.08);
+      transform: translateY(-1px);
     }
-    .submit-btn:active:not(:disabled) { transform: scale(0.96); }
+    .submit-btn:active:not(:disabled) { transform: translateY(0); }
     .submit-btn:disabled {
       background: #C4BFB8;
+      color: rgba(255,255,255,0.85);
       cursor: not-allowed;
       animation: none;
       box-shadow: none;
     }
-    .submit-btn svg { display: block; transition: transform 0.2s ease; }
-    .submit-btn:hover:not(:disabled) svg { transform: translateY(-1px); }
+    .submit-btn-arrow { display: inline-block; transition: transform 0.2s ease; }
+    .submit-btn:hover:not(:disabled) .submit-btn-arrow { transform: translateX(2px); }
 
     /* Project mode pane */
     .project-pane-inner {
@@ -1094,7 +1100,7 @@
         <div class="pane" id="pane-quick">
           <p class="drag-hint">Drop to add your screenshot</p>
           <textarea id="main-input" rows="3"
-            placeholder="Tell me what's going on. Paste a message, job posting, recruiter email, LinkedIn DM, or offer letter — something you want a second pair of eyes on."
+            placeholder="Paste anything that's giving you pause — a recruiter DM, a job posting, an offer letter. We'll look at it together."
             oninput="updateBtn()"></textarea>
           <div class="pane-toolbar">
             <div style="display:flex;align-items:center;gap:8px">
@@ -1108,7 +1114,7 @@
               </div>
             </div>
             <button class="submit-btn" id="submit-btn" onclick="handleReview()" disabled>
-              <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+              Check this <span class="submit-btn-arrow">→</span>
             </button>
           </div>
         </div>
@@ -1123,7 +1129,7 @@
       </div>
       <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/gif" style="display:none" onchange="handleImageUpload(event)" />
 
-      <p class="hero-footnote">No account needed &nbsp;·&nbsp; Nothing stored &nbsp;·&nbsp; Free to use</p>
+      <p class="hero-footnote">No account needed &nbsp;·&nbsp; Nothing stored &nbsp;·&nbsp; Private by design &nbsp;·&nbsp; Free to use</p>
     </div>
   </div>
 
@@ -1359,11 +1365,11 @@
     const ta = document.getElementById('main-input');
     if (!ta) return;
     const prompts = [
-      "Tell me what's going on. Paste a message, job posting, recruiter email, LinkedIn DM, or offer letter — something you want a second pair of eyes on.",
-      "Paste a recruiter's first DM. I'll help you read between the lines.",
-      "Drop in a job posting you're not sure about. I'll walk through it with you.",
-      "Share an email from a hiring manager — let's see what's actually being said.",
-      "Got an offer letter that feels off? Paste it here and we'll look together."
+      "Paste anything that's giving you pause — a recruiter DM, a job posting, an offer letter. We'll look at it together.",
+      "Tell me what's giving you pause about that recruiter's first message. I'll help you read between the lines.",
+      "Drop in the job posting that's giving you pause. We'll walk through it together.",
+      "Share the email from a hiring manager that's giving you pause — let's see what's actually being said.",
+      "Got an offer letter that's giving you pause? Paste it here and we'll look together."
     ];
     let promptIdx = 0, charIdx = 0, deleting = false, paused = false;
     const TYPE_MS = 28, DELETE_MS = 14, HOLD_MS = 2200, START_DELAY = 600;
